@@ -1,0 +1,33 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  display: block;
+}
+
+body {
+  background-color: bisque;
+}
+
+#p5-canvas-container {
+  width: calc(1063px / 2);
+  margin: auto;
+  /* t r b l */
+  padding: 100px 100px 50px 100px;
+  /* background-color: aqua; */
+}
+
+#text-input-container {
+  width: calc(1063px / 2);
+  margin: auto;
+  padding: 0px 100px 100px 100px;
+  /* background-color: aqua; */
+}
+
+#images {
+  position: absolute;
+  z-index: 999;
+}

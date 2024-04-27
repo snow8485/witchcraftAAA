@@ -1,0 +1,211 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  display: block;
+}
+
+body {
+  background-color: black;
+}
+
+button {
+  z-index: 100;
+}
+
+/* GLOBAL */
+
+#main-container {
+  width: calc(1063px / 2);
+  height: calc(1890px / 2);
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: aqua;
+}
+
+/* INDEX PAGE */
+
+#content-container {
+  width: 50%;
+  height: 50%;
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: tomato;
+}
+
+#welcome-text-container {
+  background-color: violet;
+  height: 30%
+}
+
+#entrance-button-container {
+  background-color: wheat;
+  height: 70%;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+}
+
+.entrance-button {
+  width: 40%;
+  height: 90%;
+  margin: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  border-width: 1px;
+  border-color: white;
+  border-style: solid;
+}
+
+#start-button {
+  /* explore! */
+}
+
+#intro-button {
+  /* explore! */
+}
+
+
+/* CAST PAGE */
+
+#interface-container {
+  /* background-color: blueviolet; */
+  position: absolute;
+  left: 0px;
+  top: 50%;
+  width: 100%;
+  height: 50%;
+}
+
+#emoji-control-container {
+  /* background-color: tomato; */
+  height: 20%;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+}
+
+.emoji-control-button {
+  width: 43%;
+  height: 50px;
+  margin: 10px;
+}
+
+#emoji-erase-button {}
+
+#emoji-scale-button {}
+
+#emoji-input-container {
+  /* background-color: olive; */
+  height: 80%;
+}
+
+#emoji-input-area {
+  /* background-color: aquamarine; */
+  height: 15%;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+}
+
+#emoji-input-box {
+  width: 90%;
+  height: 50px;
+  background-color: gray;
+}
+
+#emoji-keyboard-area {
+  /* background-color: cadetblue; */
+  height: 70%;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+.emoji {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  margin: 10px;
+}
+
+#emoji-input-button-area {
+  /* background-color: salmon; */
+  height: 15%;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  align-items: flex-start;
+}
+
+#emoji-del {
+  width: 30%;
+  height: 50px;
+  text-align: center;
+  margin: 10px;
+}
+
+#emoji-enter {
+  width: 50%;
+  height: 50px;
+  text-align: center;
+  margin: 10px;
+}
+
+#p5-canvas-container {
+  width: calc(1063px / 2);
+  height: calc(1890px / 2);
+}
+
+#button-container {
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  width: 100%;
+  height: 100px;
+
+  background-color: rgba(255, 255, 255, 0.5);
+
+  /* display: flex; */
+}
+
+#text-input-container {
+  width: calc(1063px / 2);
+  margin: auto;
+  padding: 0px 100px 100px 100px;
+  /* background-color: aqua; */
+}
+
+
+#asset-container {
+  width: calc(1063px / 2);
+  margin: auto;
+  padding: 0px 100px 100px 100px;
+
+  z-index: 999;
+}
+
+.images {
+  position: absolute;
+
+}
