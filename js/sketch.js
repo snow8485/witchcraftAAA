@@ -214,7 +214,7 @@ function draw() {
 
     // to place the camera image to the center
     //translate(-640 * SCREEN_RATIO / 2 + 1063 / 2, 0); // - camWidth/2 + canvasWidth/2
-    translate(-640, 0);
+    //translate(-640, 0);
     // display the cam image and snapshot!
     //image(cam, 0, 0, 640 * SCREEN_RATIO, 480 * SCREEN_RATIO);
     //image(snap, 0, 0, 640 * SCREEN_RATIO, 480 * SCREEN_RATIO);
