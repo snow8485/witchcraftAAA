@@ -136,12 +136,13 @@ function setup() {
 
   //
   let eraseButton = createButton('Erase Mode');
-  eraseButton.position(20, 20);
+  eraseButton.parent("emoji-control-container");
+  eraseButton.class("emoji-control-button");
   eraseButton.mousePressed(EraseMode);
 
-
   let scaleButton = createButton('Scale Mode');
-  scaleButton.position(20, 40);
+  scaleButton.parent("emoji-control-container");
+  scaleButton.class("emoji-control-button");
   scaleButton.mousePressed(ScaleMode);
 
   buttons.push(eraseButton, scaleButton);
@@ -149,6 +150,7 @@ function setup() {
 
   for (let i = 0; i < images.length; i++) {
     let button = createButton('Show Image ' + i);
+    button.parent("button-container");
     button.position(20, 80 + i * 40);
     button.mousePressed(() => showImage(i));
     buttons.push(button);
@@ -419,142 +421,143 @@ function showImage(index) {
   img.push(dragObject);
 }
 
-// function isEventOnCanvas(x, y) {
-//   const rect = document.getElementById('p5-canvas-container').getBoundingClientRect();
-//   return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
-// }
-
-
 function mousePressed() {
-  for (let i = 0; i < img.length; i++) {
-      if (img[i].mouseInside(mouseX, mouseY)) {
-          img[i].dragging = true;
-          img[i].offsetX = mouseX - img[i].x;
-          img[i].offsetY = mouseY - img[i].y;
-          return false;  // 停止处理其他图片
-      }
-  }
-}
+  if (eraseMode) {
 
-function mouseDragged() {
-  for (let i = 0; i < img.length; i++) {
-      if (img[i].dragging) {
-          img[i].x = mouseX - img[i].offsetX;
-          img[i].y = mouseY - img[i].offsetY;
+    for (let i = 0; i < img.length; i++) {
+      if (img[i].mouseInside()) {
+        img.splice(i, 1);
+        break;
       }
+    }
+  } else if (scaleMode) {
+
+    for (let i = 0; i < img.length; i++) {
+      if (img[i].mouseInside()) {
+        selectedImageIndex = i;
+        break;
+      }
+    }
+  } else {
+
+    for (let i = 0; i < img.length; i++) {
+      if (img[i].mouseInside()) {
+        img[i].dragging = true;
+        img[i].offsetX = mouseX - img[i].x;
+        img[i].offsetY = mouseY - img[i].y;
+        break;
+      }
+    }
   }
-  return false;
 }
 
 function mouseReleased() {
+
   for (let i = 0; i < img.length; i++) {
-      img[i].dragging = false;
+    img[i].dragging = false;
   }
-  return false;
+  selectedImageIndex = -1;
 }
+
+function mouseDragged() {
+
+  for (let i = 0; i < img.length; i++) {
+    if (img[i].dragging) {
+      img[i].x = mouseX - img[i].offsetX;
+      img[i].y = mouseY - img[i].offsetY;
+    }
+  }
+
+  if (selectedImageIndex !== -1) {
+    let dx = mouseX - pmouseX;
+    let dy = mouseY - pmouseY;
+    img[selectedImageIndex].adjustScale(dx, dy);
+  }
+}
+
+
+let prevTouchX = 0;
+let prevTouchY = 0;
+
 
 function touchStarted() {
   if (touches.length > 0 && isEventOnCanvas(touches[0].x, touches[0].y)) {
-      let interactionFound = false; // 标记是否找到交互对象
-      img.forEach(image => {
-          if (image.mouseInside(touches[0].x, touches[0].y)) {
-              if (!interactionFound) { // 只有首次找到时设置为true
-                  image.dragging = true;
-                  image.offsetX = touches[0].x - image.x;
-                  image.offsetY = touches[0].y - image.y;
-                  interactionFound = true; // 标记找到交互对象
-              } else {
-                  image.dragging = false; // 确保不触摸的图像不会移动
-              }
-          } else {
-              image.dragging = false; // 确保不触摸的图像不会移动
-          }
-      });
+
+    if (touches.length > 0) {
+      prevTouchX = touches[0].x;
+      prevTouchY = touches[0].y;
+    }
+
+    if (eraseMode) {
+
+      for (let i = 0; i < img.length; i++) {
+        if (img[i].touchInside(touches[0].x, touches[0].y)) {
+          img.splice(i, 1);
+          break;
+        }
+      }
+    } else if (scaleMode) {
+      for (let i = 0; i < img.length; i++) {
+        if (img[i].touchInside(touches[0].x, touches[0].y)) {
+          selectedImageIndex = i;
+          break;
+        }
+      }
+    } else {
+      for (let i = 0; i < img.length; i++) {
+        if (img[i].touchInside(touches[0].x, touches[0].y)) {
+          img[i].dragging = true;
+          img[i].offsetX = mouseX - img[i].x;
+          img[i].offsetY = mouseY - img[i].y;
+          break;
+        }
+      }
+    }
   }
 }
 
 function touchMoved() {
   if (touches.length > 0 && isEventOnCanvas(touches[0].x, touches[0].y)) {
-      img.forEach(image => {
-          if (image.dragging) {
-              image.x = touches[0].x - image.offsetX;
-              image.y = touches[0].y - image.offsetY;
-          }
-      });
+    // 处理拖动
+    for (let i = 0; i < img.length; i++) {
+      if (img[i].dragging) {
+        img[i].x = touches[0].x - img[i].offsetX;
+        img[i].y = touches[0].y - img[i].offsetY;
+      }
+    }
+
+    // 处理缩放
+    if (selectedImageIndex !== -1 && scaleMode) {
+      let dx = touches[0].x - prevTouchX;
+      let dy = touches[0].y - prevTouchY;
+      img[selectedImageIndex].adjustScale(dx, dy);
+    }
+
+    // 更新前一个触摸位置
+    prevTouchX = touches[0].x;
+    prevTouchY = touches[0].y;
   }
 }
 
 
 function touchEnded() {
-  if (touches.length > 0 && isEventOnCanvas(touches[0].x, touches[0].y)) {
-      handleInteraction(touches[0].x, touches[0].y, 'end');
+  for (let i = 0; i < img.length; i++) {
+    img[i].dragging = false;
   }
-  // 确保所有图片的拖动状态被重置
-  img.forEach(image => {
-      image.dragging = false;
-  });
+  selectedImageIndex = -1;
 }
-
-// 确保 isEventOnCanvas 函数正确定义
-function isEventOnCanvas(x, y) {
-  const rect = document.getElementById('p5-canvas-container').getBoundingClientRect();
-  return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
-}
-
 
 function mouseInBox(x, y, w, h) {
   return mouseX >= x && mouseX < x + w &&
     mouseY >= y && mouseY < y + h;
 }
 
-function handleInteraction(x, y, type) {
-  switch (type) {
-    case 'start':
-      // 检查是否在擦除模式或缩放模式
-      if (eraseMode) {
-        for (let i = img.length - 1; i >= 0; i--) {
-          if (img[i].mouseInside(x, y)) {
-            img.splice(i, 1); // 移除选中的图片
-            break;
-          }
-        }
-      } else {
-        for (let i = 0; i < img.length; i++) {
-          if (img[i].mouseInside(x, y)) {
-            img[i].dragging = true;
-            img[i].offsetX = x - img[i].x;
-            img[i].offsetY = y - img[i].y;
-            if (scaleMode) {
-              selectedImageIndex = i; // 设置当前缩放的图片索引
-            }
-            break;
-          }
-        }
-      }
-      break;
-    case 'move':
-      if (!eraseMode && selectedImageIndex !== -1 && scaleMode) {
-        // 缩放选中的图片
-        img[selectedImageIndex].adjustScale(x, y);
-      } else {
-        // 移动所有被拖动的图片
-        img.forEach((image) => {
-          if (image.dragging) {
-            image.x = x - image.offsetX;
-            image.y = y - image.offsetY;
-          }
-        });
-      }
-      break;
-    case 'end':
-      // 停止所有图片的拖动
-      img.forEach((image) => {
-        image.dragging = false;
-      });
-      selectedImageIndex = -1; // 清除选中的图片索引
-      break;
-  }
+function isEventOnCanvas(x, y) {
+  const rect = document.getElementById('p5-canvas-container').getBoundingClientRect();
+  return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
 }
+
+
 
 class ImageDragObject {
   constructor(x, y, img, scale) {
@@ -566,29 +569,29 @@ class ImageDragObject {
     this.dragging = false;
     this.offsetX = 0;
     this.offsetY = 0;
-}
+  }
 
-mouseInside(x, y) {
-    let scaledWidth = this.img.width * this.scale;
-    let scaledHeight = this.img.height * this.scale;
-    return x >= this.x && x <= this.x + scaledWidth &&
-           y >= this.y && y <= this.y + scaledHeight;
-}
+  mouseInside() {
+    return mouseInBox(this.x, this.y, this.img.width * this.scale, this.img.height * this.scale);
+  }
 
-  adjustScale(x, y) {
-    let dx = x - pmouseX; // 计算鼠标或触摸移动的距离
-    let dy = y - pmouseY;
-    // 假设缩放的影响是和移动距离成正比
-    this.scale += Math.sqrt(dx * dx + dy * dy) * 0.01;
-    this.scale = Math.max(0.1, this.scale); // 保持最小缩放限制
+  touchInside(touchX, touchY) {
+    return touchX >= this.x && touchX < this.x + this.img.width * this.scale &&
+      touchY >= this.y && touchY < this.y + this.img.height * this.scale;
   }
 
   show() {
     image(this.img, this.x, this.y, this.img.width * this.scale, this.img.height * this.scale);
-}
-}
+  }
 
-
+  adjustScale(dx, dy) {
+    let d = dist(this.x + this.img.width * this.scale, this.y + this.img.height * this.scale, mouseX, mouseY);
+    let lastDistance = dist(this.x + this.img.width * this.scale, this.y + this.img.height * this.scale, mouseX - dx, mouseY - dy);
+    let scaleChange = d - lastDistance;
+    this.scale += scaleChange / 100;
+    this.scale = max(0.1, this.scale);
+  }
+}
 
 //----TEXT INPUT DETAIL SETTINGS----
 

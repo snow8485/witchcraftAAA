@@ -104,9 +104,13 @@ button {
   margin: 10px;
 }
 
-#emoji-erase-button {}
+#emoji-erase-button {
 
-#emoji-scale-button {}
+}
+
+#emoji-scale-button {
+  
+}
 
 #emoji-input-container {
   /* background-color: olive; */

@@ -1,5 +1,9 @@
 let SCREEN_WIDTH = 1063 / 2;
 let SCREEN_HEIGHT = 1890 / 2;
+
+let windowWidth = window.innerWidth;
+let windowHeight = window.innerHeight;
+
 let SCREEN_RATIO = 1;
 let initial_img;
 let seq = 0;
@@ -65,7 +69,7 @@ function preload() {
 function setup() {
 
 
-  let canvas = createCanvas(SCREEN_WIDTH, SCREEN_HEIGHT);
+  let canvas = createCanvas(windowWidth, windowHeight);
   canvas.parent("p5-canvas-container");
 
 
