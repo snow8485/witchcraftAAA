@@ -69,7 +69,7 @@ function preload() {
 function setup() {
 
 
-  let canvas = createCanvas(480, 480);
+  let canvas = createCanvas(450, 450);
   canvas.parent("p5-canvas-container");
 
 
@@ -159,6 +159,8 @@ function setup() {
     button.parent("button-container");
     button.position(20, 80 + i * 40);
     button.mousePressed(() => showImage(i));
+    button.parent("emoji-control-container");
+    button.class("emoji-keyboard-area");
     buttons.push(button);
   }
 

@@ -187,7 +187,7 @@ button {
 #p5-canvas-container {
   position: absolute;
   left: 50%;
-  transform: translateX(-50%);
+ transform: translateX(-50%);
 }
 
 #button-container {
