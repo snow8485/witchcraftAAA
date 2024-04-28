@@ -32,7 +32,7 @@ button {
   position: absolute;
 
   
-  background-color: aqua;
+ /* background-color: aqua; */
 
   
 }
@@ -47,17 +47,17 @@ button {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  background-color: tomato;
+  /* background-color: tomato; */
 }
 
 #welcome-text-container {
-  background-color: violet;
+  /* background-color: violet; */
   height: 30%
 }
 
 #entrance-button-container {
-  background-color: wheat;
-  height: 70%;
+  /* background-color: wheat; */
+  height: 80%;
 
   display: flex;
   flex-wrap: wrap;
@@ -66,14 +66,14 @@ button {
 }
 
 .entrance-button {
-  width: 40%;
-  height: 90%;
+  width: 10%;
+  height: 80%;
   margin: 10px;
   background-color: rgba(0, 0, 0, 0.5);
 
-  border-width: 1px;
-  border-color: white;
-  border-style: solid;
+  /* border-width: 1px; */
+  /* border-color: white; */
+  /* border-style: solid; */
 }
 
 #start-button {

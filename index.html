@@ -10,19 +10,53 @@
 </head>
 
 <body>
+    <style>
+        body {
+            background-image: url('assets/beijing.png'); 
+            background-size: cover; 
+            background-position: top; 
+            
+        }
+    </style>
+
     <div id="main-container">
         <div id="content-container">
             <div id="welcome-text-container">
                 Welcome! Very Welcome!
+                <style>
+                    body {
+                        color: white; 
+                    }
+                </style>
             </div>
             <div id="entrance-button-container">
+                <style>
+                    .start-button {
+                        display: flex; 
+                        justify-content: center; 
+                        align-items: center; 
+                        /* border: none; */
+                        /* background-color: transparent; */
+                        /* padding: 0;  */
+                    }
+                
+                    .start-button img {
+                        max-width: 100%; 
+                        max-height: 100%; 
+                    }
+
+                    
+                </style>
+
+                
                 <button class="entrance-button" id="start-button">
         
                     <a href="page-cast.html">
-                        <img src="assets/kaishi.png" alt="按钮" width="100" height="300">
+                        <img src="assets/kaishi1.png" alt="按钮" width="100" height="300">
+                    
                     </a>
                 </button>
-                <button class="entrance-button" id="intro-button">intro
+                <button class="entrance-button" id="intro-button">
 
                 <a href="page-cast.html">
                     <img src="assets/zhidao.png" alt="按钮" width="100" height="300">
