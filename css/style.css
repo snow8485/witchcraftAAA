@@ -186,8 +186,8 @@ button {
 
 #p5-canvas-container {
   position: absolute;
-  width: 640;
-  height: 640;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 #button-container {
@@ -203,7 +203,7 @@ button {
 }
 
 #text-input-container {
-  width: calc(1063px / 2);
+  width:480;
   margin: auto;
   padding: 0px 100px 100px 100px;
   /* background-color: aqua; */
@@ -211,7 +211,7 @@ button {
 
 
 #asset-container {
-  width: calc(1063px / 2);
+  width: 480;
   margin: auto;
   padding: 0px 100px 100px 100px;
 

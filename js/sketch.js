@@ -69,7 +69,7 @@ function preload() {
 function setup() {
 
 
-  let canvas = createCanvas(windowWidth, windowHeight);
+  let canvas = createCanvas(480, 480);
   canvas.parent("p5-canvas-container");
 
 
@@ -79,7 +79,8 @@ function setup() {
   cam.hide();
 
   //snap = createImage(640 * SCREEN_RATIO, 480 * SCREEN_RATIO);
-  snap = createImage(640, 640);
+  
+  snap = createImage(480, 480);
 
   createTextInput();
   fill(255, 150, 200);
@@ -219,8 +220,8 @@ function draw() {
     //image(cam, 0, 0, 640 * SCREEN_RATIO, 480 * SCREEN_RATIO);
     //image(snap, 0, 0, 640 * SCREEN_RATIO, 480 * SCREEN_RATIO);
 
-    image(cam, 0, 0, 640, 640);
-    image(snap, 0, 0, 640, 640);
+    image(cam, 0, 0, 480, 480);
+    image(snap, 0, 0, 480, 480);
 
     button_next.hide();
 
@@ -236,10 +237,10 @@ function draw() {
     scale(-1, 1);
 
     // to place the camera image to the center
-    translate(-640 * SCREEN_RATIO / 2 + 1063 / 2, 0); // - camWidth/2 + canvasWidth/2
+   // translate(-480, 0); // - camWidth/2 + canvasWidth/2
 
     // display the cam image and snapshot!
-    image(cam, 0, 0, 640 * SCREEN_RATIO, 480 * SCREEN_RATIO);
+    image(cam, 0, 0, 480, 480);
     //image(snap, 0, 0, 640 * SCREEN_RATIO, 480 * SCREEN_RATIO);
 
     button_next.hide();
