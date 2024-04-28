@@ -24,8 +24,8 @@ button {
 
   
   width: 50vw; /* 宽度为视窗宽度的50% */
-  width: 50vw;
-  height: 50vh; /* 高度为视窗高度的50% */
+  width: 100vw;
+  height: 100vh; /* 高度为视窗高度的50% */
 
   position: absolute;
   left: 50%;
