@@ -1,5 +1,5 @@
-let SCREEN_WIDTH = 1063 / 2;
-let SCREEN_HEIGHT = 1890 / 2;
+//let SCREEN_WIDTH = 1063 / 2;
+//let SCREEN_HEIGHT = 1890 / 2;
 
 let windowWidth = window.innerWidth;
 let windowHeight = window.innerHeight;
@@ -73,12 +73,13 @@ function setup() {
   canvas.parent("p5-canvas-container");
 
 
-  SCREEN_RATIO = SCREEN_HEIGHT / 480;
+ // SCREEN_RATIO = SCREEN_HEIGHT / 480;
 
   cam = createCapture(VIDEO);
   cam.hide();
 
-  snap = createImage(640 * SCREEN_RATIO, 480 * SCREEN_RATIO);
+  //snap = createImage(640 * SCREEN_RATIO, 480 * SCREEN_RATIO);
+  snap = createImage(640, 640);
 
   createTextInput();
   fill(255, 150, 200);

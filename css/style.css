@@ -18,20 +18,19 @@ button {
 
 /* GLOBAL */
 
-#main-container {
-  /* width: calc(1063px / 2);/* 
-  /* height: calc(1890px / 2);/* 
 
-  
-  width: 50vw; /* 宽度为视窗宽度的50% */
+#main-container {
+
+
   width: 100vw;
-  height: 100vh; /* 高度为视窗高度的50% */
+  height: 100vh; 
 
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+
+  
   background-color: aqua;
+
+  
 }
 
 /* INDEX PAGE */
