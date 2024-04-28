@@ -19,8 +19,13 @@ button {
 /* GLOBAL */
 
 #main-container {
-  width: calc(1063px / 2);
-  height: calc(1890px / 2);
+  /* width: calc(1063px / 2);/* 
+  /* height: calc(1890px / 2);/* 
+
+  
+  width: 50vw; /* 宽度为视窗宽度的50% */
+  width: 50vw;
+  height: 50vh; /* 高度为视窗高度的50% */
 
   position: absolute;
   left: 50%;
@@ -109,7 +114,7 @@ button {
 }
 
 #emoji-scale-button {
-  
+
 }
 
 #emoji-input-container {
