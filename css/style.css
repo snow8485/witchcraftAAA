@@ -181,8 +181,9 @@ button {
 }
 
 #p5-canvas-container {
-  width: calc(1063px / 2);
-  height: calc(1890px / 2);
+  position: absolute;
+  width: 640;
+  height: 640;
 }
 
 #button-container {
