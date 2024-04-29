@@ -1,5 +1,9 @@
-let SCREEN_WIDTH = 1063 / 2;
-let SCREEN_HEIGHT = 1890 / 2;
+//let SCREEN_WIDTH = 1063 / 2;
+//let SCREEN_HEIGHT = 1890 / 2;
+
+let windowWidth = window.innerWidth;
+let windowHeight = window.innerHeight;
+
 let SCREEN_RATIO = 1;
 let initial_img;
 let seq = 0;
@@ -16,6 +20,7 @@ let bs1_sun;
 
 // IMG
 //let em1X, em1Y;
+
 
 
 
@@ -65,16 +70,18 @@ function preload() {
 function setup() {
 
 
-  let canvas = createCanvas(SCREEN_WIDTH, SCREEN_HEIGHT);
+  let canvas = createCanvas(450, 450);
   canvas.parent("p5-canvas-container");
 
 
-  SCREEN_RATIO = SCREEN_HEIGHT / 480;
+ // SCREEN_RATIO = SCREEN_HEIGHT / 480;
 
   cam = createCapture(VIDEO);
   cam.hide();
 
-  snap = createImage(640 * SCREEN_RATIO, 480 * SCREEN_RATIO);
+  //snap = createImage(640 * SCREEN_RATIO, 480 * SCREEN_RATIO);
+  
+  snap = createImage(480, 480);
 
   createTextInput();
   fill(255, 150, 200);
@@ -136,12 +143,13 @@ function setup() {
 
   //
   let eraseButton = createButton('Erase Mode');
-  eraseButton.position(20, 20);
+  eraseButton.parent("emoji-control-container");
+  eraseButton.class("emoji-control-button");
   eraseButton.mousePressed(EraseMode);
 
-
   let scaleButton = createButton('Scale Mode');
-  scaleButton.position(20, 40);
+  scaleButton.parent("emoji-control-container");
+  scaleButton.class("emoji-control-button");
   scaleButton.mousePressed(ScaleMode);
 
   buttons.push(eraseButton, scaleButton);
@@ -149,8 +157,11 @@ function setup() {
 
   for (let i = 0; i < images.length; i++) {
     let button = createButton('Show Image ' + i);
+    button.parent("button-container");
     button.position(20, 80 + i * 40);
     button.mousePressed(() => showImage(i));
+    button.parent("emoji-control-container");
+    button.class("emoji-keyboard-area");
     buttons.push(button);
   }
 
@@ -173,6 +184,16 @@ function setup() {
     asset.style.zIndex = 9999;
   });
 
+
+
+  const edit_interface = document.getElementById('interface-container');
+  const edit_time = false;
+  
+  if (edit_time) {
+      edit_interface.style.display = 'block'; // 显示容器
+  } else {
+      edit_interface.style.display = 'none'; // 隐藏容器
+  }
 
 }
 
@@ -206,11 +227,14 @@ function draw() {
     scale(-1, 1);
 
     // to place the camera image to the center
-    translate(-640 * SCREEN_RATIO / 2 + 1063 / 2, 0); // - camWidth/2 + canvasWidth/2
-
+    //translate(-640 * SCREEN_RATIO / 2 + 1063 / 2, 0); // - camWidth/2 + canvasWidth/2
+    //translate(-640, 0);
     // display the cam image and snapshot!
-    image(cam, 0, 0, 640 * SCREEN_RATIO, 480 * SCREEN_RATIO);
-    image(snap, 0, 0, 640 * SCREEN_RATIO, 480 * SCREEN_RATIO);
+    //image(cam, 0, 0, 640 * SCREEN_RATIO, 480 * SCREEN_RATIO);
+    //image(snap, 0, 0, 640 * SCREEN_RATIO, 480 * SCREEN_RATIO);
+
+    image(cam, 0, 0, 480, 480);
+    image(snap, 0, 0, 480, 480);
 
     button_next.hide();
 
@@ -226,10 +250,10 @@ function draw() {
     scale(-1, 1);
 
     // to place the camera image to the center
-    translate(-640 * SCREEN_RATIO / 2 + 1063 / 2, 0); // - camWidth/2 + canvasWidth/2
+   // translate(-480, 0); // - camWidth/2 + canvasWidth/2
 
     // display the cam image and snapshot!
-    image(cam, 0, 0, 640 * SCREEN_RATIO, 480 * SCREEN_RATIO);
+    image(cam, 0, 0, 480, 480);
     //image(snap, 0, 0, 640 * SCREEN_RATIO, 480 * SCREEN_RATIO);
 
     button_next.hide();
@@ -320,7 +344,8 @@ function PROCEED() {
   button_retake.hide();
   button_proceed.hide();
 
-  button_emoji_1_sun.show();
+
+  const edit_time = true;
 
 
 }
@@ -373,7 +398,7 @@ function EDIT() {
   button_text_input.show();
   button_edit.hide();
   button_save.show();
-  button_emoji_1_sun.hide();
+ 
 
 }
 
@@ -473,10 +498,89 @@ function mouseDragged() {
   }
 }
 
+
+let prevTouchX = 0;
+let prevTouchY = 0;
+
+
+function touchStarted() {
+  if (touches.length > 0 && isEventOnCanvas(touches[0].x, touches[0].y)) {
+
+    if (touches.length > 0) {
+      prevTouchX = touches[0].x;
+      prevTouchY = touches[0].y;
+    }
+
+    if (eraseMode) {
+
+      for (let i = 0; i < img.length; i++) {
+        if (img[i].touchInside(touches[0].x, touches[0].y)) {
+          img.splice(i, 1);
+          break;
+        }
+      }
+    } else if (scaleMode) {
+      for (let i = 0; i < img.length; i++) {
+        if (img[i].touchInside(touches[0].x, touches[0].y)) {
+          selectedImageIndex = i;
+          break;
+        }
+      }
+    } else {
+      for (let i = 0; i < img.length; i++) {
+        if (img[i].touchInside(touches[0].x, touches[0].y)) {
+          img[i].dragging = true;
+          img[i].offsetX = mouseX - img[i].x;
+          img[i].offsetY = mouseY - img[i].y;
+          break;
+        }
+      }
+    }
+  }
+}
+
+function touchMoved() {
+  if (touches.length > 0 && isEventOnCanvas(touches[0].x, touches[0].y)) {
+    // 处理拖动
+    for (let i = 0; i < img.length; i++) {
+      if (img[i].dragging) {
+        img[i].x = touches[0].x - img[i].offsetX;
+        img[i].y = touches[0].y - img[i].offsetY;
+      }
+    }
+
+    // 处理缩放
+    if (selectedImageIndex !== -1 && scaleMode) {
+      let dx = touches[0].x - prevTouchX;
+      let dy = touches[0].y - prevTouchY;
+      img[selectedImageIndex].adjustScale(dx, dy);
+    }
+
+    // 更新前一个触摸位置
+    prevTouchX = touches[0].x;
+    prevTouchY = touches[0].y;
+  }
+}
+
+
+function touchEnded() {
+  for (let i = 0; i < img.length; i++) {
+    img[i].dragging = false;
+  }
+  selectedImageIndex = -1;
+}
+
 function mouseInBox(x, y, w, h) {
   return mouseX >= x && mouseX < x + w &&
     mouseY >= y && mouseY < y + h;
 }
+
+function isEventOnCanvas(x, y) {
+  const rect = document.getElementById('p5-canvas-container').getBoundingClientRect();
+  return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+}
+
+
 
 class ImageDragObject {
   constructor(x, y, img, scale) {
@@ -492,6 +596,11 @@ class ImageDragObject {
 
   mouseInside() {
     return mouseInBox(this.x, this.y, this.img.width * this.scale, this.img.height * this.scale);
+  }
+
+  touchInside(touchX, touchY) {
+    return touchX >= this.x && touchX < this.x + this.img.width * this.scale &&
+      touchY >= this.y && touchY < this.y + this.img.height * this.scale;
   }
 
   show() {

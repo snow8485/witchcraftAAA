@@ -21,6 +21,7 @@ let bs1_sun;
 // IMG
 //let em1X, em1Y;
 
+let edit_time = false; 
 
 
 //let dragObject;
@@ -184,6 +185,14 @@ function setup() {
   });
 
 
+
+  // const edit_interface = document.getElementById('interface-container');
+
+  // if (edit_time) {
+  //     edit_interface.style.display = 'block'; // 显示容器
+  // } else {
+  //     edit_interface.style.display = 'none'; // 隐藏容器
+  // }
 }
 
 function draw() {
@@ -333,7 +342,17 @@ function PROCEED() {
   button_retake.hide();
   button_proceed.hide();
 
-  button_emoji_1_sun.show();
+  edit_time = !edit_time; 
+  // setup(); 
+  const edit_interface = document.getElementById('interface-container');
+
+  if (edit_time) {
+      edit_interface.style.display = 'block'; // 显示容器
+  } else {
+      edit_interface.style.display = 'none'; // 隐藏容器
+  }
+  console.log("hi");
+
 
 
 }
@@ -385,8 +404,18 @@ function EDIT() {
   button_snap.hide();
   button_text_input.show();
   button_edit.hide();
+  
   button_save.show();
-  button_emoji_1_sun.hide();
+  edit_time = !edit_time; 
+  const edit_interface = document.getElementById('interface-container');
+
+  if (edit_time) {
+      edit_interface.style.display = 'block'; 
+  } else {
+      edit_interface.style.display = 'none'; 
+  }
+  // setup();
+ 
 
 }
 
