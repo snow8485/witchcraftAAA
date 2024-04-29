@@ -66,8 +66,8 @@ button {
 }
 
 .entrance-button {
-  width: 10%;
-  height: 80%;
+  width: 100;
+  height: 300;
   margin: 10px;
   background-color: rgba(0, 0, 0, 0.5);
 
