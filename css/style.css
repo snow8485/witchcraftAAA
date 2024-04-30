@@ -162,6 +162,8 @@ button {
   height: 50px;
   text-align: center;
   margin: 10px;
+  background-size: cover;
+  
 }
 
 #emoji-input-button-area {

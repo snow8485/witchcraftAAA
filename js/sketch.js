@@ -19,12 +19,18 @@ let bs1_sun;
 
 
 // IMG
+
+let buttons_icons = [];
+
+let selected_emojis = [];
+
+
 //let em1X, em1Y;
 
 let edit_time = false; 
 
 
-//let dragObject;
+
 
 //scale
 let images = [];
@@ -59,9 +65,13 @@ function preload() {
 
 
 
-  images.push(loadImage('assets/quzhu.png'));
-  images.push(loadImage('assets/men.png'));
+  images.push(loadImage('assets/huo.png'));
+  images.push(loadImage('assets/long.png'));
 
+
+
+  buttons_icons.push(loadImage('assets/fire_emoji.png'));
+  buttons_icons.push(loadImage('assets/dragon_emoji.png'));
   //images.parent("asset_container");
 
 
@@ -155,30 +165,63 @@ function setup() {
   buttons.push(eraseButton, scaleButton);
 
 
+  // for (let i = 0; i < images.length; i++) {
+  //   let button = createButton('Show Image ' + i);
+  //   button.parent("button-container");
+  //   button.position(20, 80 + i * 40);
+  //   button.mousePressed(() => showImage(i));
+  //   button.parent("emoji-control-container");
+  //   button.class("emoji-keyboard-area");
+  //   buttons.push(button);
+  // }
+
+  
   for (let i = 0; i < images.length; i++) {
-    let button = createButton('Show Image ' + i);
-    button.parent("button-container");
-    button.position(20, 80 + i * 40);
+    let button = createButton('');
+    // button.parent("emoji-keyboard-area");
+    // button.position(20, 80 + i * 40);
     button.mousePressed(() => showImage(i));
-    button.parent("emoji-control-container");
-    button.class("emoji-keyboard-area");
+    button.parent("emoji-keyboard-area");
+    button.class("emoji");
+
+    button.style.backgroundImage = `url('${buttons_icons[i]}')`;
+    button.style.backgroundSize = "cover";
+
     buttons.push(button);
   }
 
 
-
   //try
+
+
+
+e_buttons = document.querySelectorAll('.emoji');
+
+// 事件监听器
+e_buttons.forEach(e_buttons => {
+    e_buttons.addEventListener('click', () => {
+       
+        const imageSrc = e_buttons.dataset.src;
+        selected_emojis.push(imageSrc);
+        
+        console.log(selected_emojis);
+    });
+});
+
+
+
+
 
   const container = document.getElementById('asset-container');
 
   // 遍历图片数组，创建并添加图片元素到容器中
   images.forEach(src => {
-    // 创建图片元素
+   
     const asset = document.createElement('asset');
     asset.src = src;
     asset.alt = 'Image';
 
-    // 将图片元素添加到容器中
+   
     container.appendChild(asset);
 
     asset.style.zIndex = 9999;
@@ -189,9 +232,9 @@ function setup() {
   // const edit_interface = document.getElementById('interface-container');
 
   // if (edit_time) {
-  //     edit_interface.style.display = 'block'; // 显示容器
+  //     edit_interface.style.display = 'block'; 
   // } else {
-  //     edit_interface.style.display = 'none'; // 隐藏容器
+  //     edit_interface.style.display = 'none';
   // }
 }
 
@@ -311,9 +354,9 @@ function draw() {
     em1Y = mouseY;
   }
 
-  if (showEmoji1) {
-    image(emoji_1_sun, em1X, em1Y);
-  }
+  // if (showEmoji1) {
+  //   image(emoji_1_sun, em1X, em1Y);
+  // }
 
 
   for (let i = 0; i < img.length; i++) {
@@ -347,9 +390,9 @@ function PROCEED() {
   const edit_interface = document.getElementById('interface-container');
 
   if (edit_time) {
-      edit_interface.style.display = 'block'; // 显示容器
+      edit_interface.style.display = 'block'; 
   } else {
-      edit_interface.style.display = 'none'; // 隐藏容器
+      edit_interface.style.display = 'none'; 
   }
   console.log("hi");
 
@@ -369,7 +412,7 @@ function SNAP() {
 
   //snap = cam.get(0, 0);
 
-  //let tempCanvas = createGraphics(width, height);
+  //let tempCanvas = createGraphics(width, height); 
 
   tempCanvas = createGraphics(width, height);
 
