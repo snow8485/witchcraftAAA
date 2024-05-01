@@ -69,8 +69,9 @@ function preload() {
   images.push(loadImage('assets/long.png'));
 
 
-  buttons_icons.push(loadImage('assets/fire_emoji.png', () => console.log('Fire emoji loaded successfully'), () => console.error('Failed to load fire emoji')));
-  buttons_icons.push(loadImage('assets/dragon_emoji.png', () => console.log('Dragon emoji loaded successfully'), () => console.error('Failed to load dragon emoji')));
+
+  buttons_icons.push(loadImage('assets/fire_emoji.png'));
+  buttons_icons.push(loadImage('assets/dragon_emoji.png'));
   //images.parent("asset_container");
 
 
@@ -176,33 +177,17 @@ function setup() {
 
   
   for (let i = 0; i < images.length; i++) {
-    let button = createButton(''); 
-    button.id("emoji" + i);
+    let button = createButton('');
     // button.parent("emoji-keyboard-area");
     // button.position(20, 80 + i * 40);
     button.mousePressed(() => showImage(i));
     button.parent("emoji-keyboard-area");
     button.class("emoji");
 
-
-    // let emoji_buttons = document.getElementById("emoji");
-
-    // emoji_buttons.style.background = `url('${buttons_icons[i]}') no-repeat 0 0 / 100% 100%`;
-    // button.style.backgroundImage = `url('${buttons_icons[i]}')`;
-    // button.class(`icon${i + 1}`);
-    // button.style.backgroundSize = "cover";
-
-    let emoji_button_id = "emoji" + i;
-    let emoji_button = document.getElementById(emoji_button_id); 
-
-    if (emoji_button) { 
-      emoji_button.style.background = `url('${buttons_icons[i].src}') no-repeat 0 0 / 100% 100%`; 
-  } else {
-      console.error("Element with ID '" + emoji_button_id + "' not found.");
-  }
+    button.style.backgroundImage = `url('${buttons_icons[i]}')`;
+    button.style.backgroundSize = "cover";
 
     buttons.push(button);
-    console.log(buttons_icons[i]);
   }
 
 

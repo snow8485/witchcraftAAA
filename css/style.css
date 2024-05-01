@@ -78,10 +78,23 @@ button {
 
 #start-button {
   /* explore! */
+  width:100;
+  height: 300;
+  /* display: flex;  */
+  justify-content: center; 
+  align-items: center; 
+  /* border: none; */
+  /* background-color: transparent; */
+  /* padding: 0;  */
+  /* background-size: cover;  */
+  background:url('start.png') no-repeat 0 0 / 100% 100%;
+  background-position: center; /* 图片居中对齐 */
 }
 
 #intro-button {
   /* explore! */
+  width: 100;
+  height: 500;
 }
 
 
@@ -165,6 +178,9 @@ button {
   background-size: cover;
   
 }
+
+
+
 
 #emoji-input-button-area {
   /* background-color: salmon; */
