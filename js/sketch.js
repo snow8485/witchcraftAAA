@@ -20,7 +20,12 @@ let bs1_sun;
 
 // IMG
 
-let buttons_icons = [];
+let buttons_icons = [
+  'assets/fire_emoji.png',
+  'assets/dragon_emoji.png',
+  'assets/rainbow_emoji.png',
+  'assets/he_emoji.png'
+];
 
 let selected_emojis = [];
 
@@ -67,10 +72,12 @@ function preload() {
 
   images.push(loadImage('assets/huo.png'));
   images.push(loadImage('assets/long.png'));
+  images.push(loadImage('assets/caihong.png'));
+  images.push(loadImage('assets/he.png'));
 
 
-  buttons_icons.push(loadImage('assets/fire_emoji.png', () => console.log('Fire emoji loaded successfully'), () => console.error('Failed to load fire emoji')));
-  buttons_icons.push(loadImage('assets/dragon_emoji.png', () => console.log('Dragon emoji loaded successfully'), () => console.error('Failed to load dragon emoji')));
+  // buttons_icons.push(loadImage('assets/fire_emoji.png'));
+  // buttons_icons.push(loadImage('assets/dragon_emoji.png'));
   //images.parent("asset_container");
 
 
@@ -173,37 +180,20 @@ function setup() {
   //   button.class("emoji-keyboard-area");
   //   buttons.push(button);
   // }
-
+  let emojiKBA = document.getElementById("emoji-keyboard-area");
   
   for (let i = 0; i < images.length; i++) {
-    let button = createButton(''); 
-    button.id("emoji" + i);
-    // button.parent("emoji-keyboard-area");
-    // button.position(20, 80 + i * 40);
-    button.mousePressed(() => showImage(i));
-    button.parent("emoji-keyboard-area");
-    button.class("emoji");
+  
+    let button = document.createElement("button");
+    button.setAttribute("class", "emoji");
+    
+    button.style.backgroundImage = `url('${buttons_icons[i]}')`; 
+    button.style.backgroundSize = "cover"; 
+    button.addEventListener("click", () => showImage(i)); 
 
-
-    // let emoji_buttons = document.getElementById("emoji");
-
-    // emoji_buttons.style.background = `url('${buttons_icons[i]}') no-repeat 0 0 / 100% 100%`;
-    // button.style.backgroundImage = `url('${buttons_icons[i]}')`;
-    // button.class(`icon${i + 1}`);
-    // button.style.backgroundSize = "cover";
-
-    let emoji_button_id = "emoji" + i;
-    let emoji_button = document.getElementById(emoji_button_id); 
-
-    if (emoji_button) { 
-      emoji_button.style.background = `url('${buttons_icons[i].src}') no-repeat 0 0 / 100% 100%`; 
-  } else {
-      console.error("Element with ID '" + emoji_button_id + "' not found.");
-  }
-
-    buttons.push(button);
-    console.log(buttons_icons[i]);
-  }
+    
+    emojiKBA.appendChild(button);
+}
 
 
   //try
@@ -223,13 +213,47 @@ e_buttons.forEach(e_buttons => {
     });
 });
 
+const delButton = document.getElementById('emoji-del');
 
+// 事件监听器
+delButton.addEventListener('click', () => {
+    
+    selected_emojis.pop();
+    console.log(selected_emojis);
+});
+
+
+
+// const enterButton = document.getElementById('emoji-enter');
+
+// //事件监听器
+// enterButton.addEventListener('click', () => {
+    
+//     switch(selected_emojis.length) {
+//         case 1:
+            
+//             generateImageGroup(1);
+//             break;
+//         case 2:
+            
+//             generateImageGroup(2);
+//             break;
+//         case 3:
+//         case 4:
+            
+//             generateImageGroup(3);
+//             break;
+//         default:
+            
+//             console.log("no more");
+//     }
+// });
 
 
 
   const container = document.getElementById('asset-container');
 
-  // 遍历图片数组，创建并添加图片元素到容器中
+  
   images.forEach(src => {
    
     const asset = document.createElement('asset');
@@ -381,6 +405,26 @@ function draw() {
 
 
 }
+
+
+// function generateImageGroup(length) {
+  
+//   let backgroundURL;
+//   switch(length) {
+//       case 1:
+//           backgroundURL = 'assets/k1.png';
+//           break;
+//       case 2:
+//           backgroundURL = 'assets/k2.png';
+//           break;
+//       case 3:
+//       case 4:
+//           backgroundURL = 'assets/k3.png';
+//           break;
+//   }
+
+ 
+// }
 
 function NEXT() {
 

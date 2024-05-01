@@ -20,7 +20,11 @@ let bs1_sun;
 
 // IMG
 
-let buttons_icons = [];
+let buttons_icons = [
+  'assets/fire_emoji.png',
+  'assets/dragon_emoji.png'
+
+];
 
 let selected_emojis = [];
 
@@ -71,9 +75,8 @@ function preload() {
   images.push(loadImage('assets/he.png'));
 
 
-  buttons_icons.push(loadImage('assets/fire_emoji.png'));
-  buttons_icons.push(loadImage('assets/dragon_emoji.png'));
-  
+  // buttons_icons.push(loadImage('assets/fire_emoji.png'));
+  // buttons_icons.push(loadImage('assets/dragon_emoji.png'));
   //images.parent("asset_container");
 
 
@@ -182,6 +185,11 @@ function setup() {
     let button = createButton('');
     // button.parent("emoji-keyboard-area");
     // button.position(20, 80 + i * 40);
+ 
+    // for (let i = 0; i < buttons_icons.length; i++) {
+
+    // }
+
     button.mousePressed(() => showImage(i));
     button.parent("emoji-keyboard-area");
     button.class("emoji");
@@ -216,7 +224,7 @@ e_buttons.forEach(e_buttons => {
 
   const container = document.getElementById('asset-container');
 
-  // 遍历图片数组，创建并添加图片元素到容器中
+  
   images.forEach(src => {
    
     const asset = document.createElement('asset');
