@@ -22,7 +22,7 @@ let bs1_sun;
 
 let buttons_icons = [
   'assets/fire_emoji.png',
-  'assets/dragon_emoji.png',
+  'assets/Dragon_emoji.png',
   'assets/rainbow_emoji.png',
   'assets/he_emoji.png'
 ];
@@ -32,7 +32,7 @@ let selected_emojis = [];
 
 //let em1X, em1Y;
 
-let edit_time = false; 
+let edit_time = false;
 
 
 
@@ -90,13 +90,13 @@ function setup() {
   canvas.parent("p5-canvas-container");
 
 
- // SCREEN_RATIO = SCREEN_HEIGHT / 480;
+  // SCREEN_RATIO = SCREEN_HEIGHT / 480;
 
   cam = createCapture(VIDEO);
   cam.hide();
 
   //snap = createImage(640 * SCREEN_RATIO, 480 * SCREEN_RATIO);
-  
+
   snap = createImage(480, 480);
 
   createTextInput();
@@ -181,86 +181,86 @@ function setup() {
   //   buttons.push(button);
   // }
   let emojiKBA = document.getElementById("emoji-keyboard-area");
-  
+
   for (let i = 0; i < images.length; i++) {
-  
+
     let button = document.createElement("button");
     button.setAttribute("class", "emoji");
-    
-    button.style.backgroundImage = `url('${buttons_icons[i]}')`; 
-    button.style.backgroundSize = "cover"; 
-    button.addEventListener("click", () => showImage(i)); 
 
-    
+    button.style.backgroundImage = `url('${buttons_icons[i]}')`;
+    button.style.backgroundSize = "cover";
+    button.addEventListener("click", () => showImage(i));
+
+
     emojiKBA.appendChild(button);
-}
+  }
 
 
   //try
 
 
 
-e_buttons = document.querySelectorAll('.emoji');
+  e_buttons = document.querySelectorAll('.emoji');
 
-// 事件监听器
-e_buttons.forEach(e_buttons => {
+  // 事件监听器
+  e_buttons.forEach(e_buttons => {
     e_buttons.addEventListener('click', () => {
-       
-        const imageSrc = e_buttons.dataset.src;
-        selected_emojis.push(imageSrc);
-        
-        console.log(selected_emojis);
+
+      const imageSrc = e_buttons.dataset.src;
+      selected_emojis.push(imageSrc);
+
+      console.log(selected_emojis);
     });
-});
+  });
 
-const delButton = document.getElementById('emoji-del');
+  const delButton = document.getElementById('emoji-del');
 
-// 事件监听器
-delButton.addEventListener('click', () => {
-    
+  // 事件监听器
+  delButton.addEventListener('click', () => {
+
     selected_emojis.pop();
     console.log(selected_emojis);
-});
+  });
 
 
 
-// const enterButton = document.getElementById('emoji-enter');
+  // const enterButton = document.getElementById('emoji-enter');
 
-// //事件监听器
-// enterButton.addEventListener('click', () => {
-    
-//     switch(selected_emojis.length) {
-//         case 1:
-            
-//             generateImageGroup(1);
-//             break;
-//         case 2:
-            
-//             generateImageGroup(2);
-//             break;
-//         case 3:
-//         case 4:
-            
-//             generateImageGroup(3);
-//             break;
-//         default:
-            
-//             console.log("no more");
-//     }
-// });
+  // //事件监听器
+  // enterButton.addEventListener('click', () => {
+
+  //     switch(selected_emojis.length) {
+  //         case 1:
+
+  //             generateImageGroup(1);
+  //             break;
+  //         case 2:
+
+  //             generateImageGroup(2);
+  //             break;
+  //         case 3:
+  //         case 4:
+
+  //             generateImageGroup(3);
+  //             break;
+  //         default:
+
+  //             console.log("no more");
+  //     }
+  // });
 
 
 
   const container = document.getElementById('asset-container');
 
-  
+
   images.forEach(src => {
-   
+
     const asset = document.createElement('asset');
     asset.src = src;
     asset.alt = 'Image';
 
-   
+
     container.appendChild(asset);
 
     asset.style.zIndex = 9999;
@@ -330,7 +330,7 @@ function draw() {
     scale(-1, 1);
 
     // to place the camera image to the center
-   // translate(-480, 0); // - camWidth/2 + canvasWidth/2
+    // translate(-480, 0); // - camWidth/2 + canvasWidth/2
 
     // display the cam image and snapshot!
     image(cam, 0, 0, 480, 480);
@@ -408,7 +408,7 @@ function draw() {
 
 
 // function generateImageGroup(length) {
-  
+
 //   let backgroundURL;
 //   switch(length) {
 //       case 1:
@@ -423,7 +423,7 @@ function draw() {
 //           break;
 //   }
 
- 
+
 // }
 
 function NEXT() {
@@ -444,14 +444,14 @@ function PROCEED() {
   button_retake.hide();
   button_proceed.hide();
 
-  edit_time = !edit_time; 
+  edit_time = !edit_time;
   // setup(); 
   const edit_interface = document.getElementById('interface-container');
 
   if (edit_time) {
-      edit_interface.style.display = 'block'; 
+    edit_interface.style.display = 'block';
   } else {
-      edit_interface.style.display = 'none'; 
+    edit_interface.style.display = 'none';
   }
   console.log("hi");
 
@@ -506,18 +506,18 @@ function EDIT() {
   button_snap.hide();
   button_text_input.show();
   button_edit.hide();
-  
+
   button_save.show();
-  edit_time = !edit_time; 
+  edit_time = !edit_time;
   const edit_interface = document.getElementById('interface-container');
 
   if (edit_time) {
-      edit_interface.style.display = 'block'; 
+    edit_interface.style.display = 'block';
   } else {
-      edit_interface.style.display = 'none'; 
+    edit_interface.style.display = 'none';
   }
   // setup();
- 
+
 
 }
 
