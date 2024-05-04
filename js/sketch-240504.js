@@ -27,13 +27,6 @@ let buttons_icons = [
   'assets/he_emoji.png'
 ];
 
-let imageULRs = ['assets/huo.png',
-  'assets/long.png',
-  'assets/caihong.png',
-  'assets/he.png']
-
-let images = []
-
 let selected_emojis = [];
 
 
@@ -45,7 +38,7 @@ let edit_time = false;
 
 
 //scale
-
+let images = [];
 let img = [];
 let buttons = [];
 let eraseMode = false;
@@ -76,13 +69,11 @@ function preload() {
   //emoji_1_sun = loadImage('assets/em1.png');
 
 
-  for (let i = 0; i < imageULRs.length; i++) {
-    images.push(loadImage(imageULRs[i]));
-  }
 
-  // images.push(loadImage('assets/long.png'));
-  // images.push(loadImage('assets/caihong.png'));
-  // images.push(loadImage('assets/he.png'));
+  images.push(loadImage('assets/huo.png'));
+  images.push(loadImage('assets/long.png'));
+  images.push(loadImage('assets/caihong.png'));
+  images.push(loadImage('assets/he.png'));
 
 
   // buttons_icons.push(loadImage('assets/fire_emoji.png'));
@@ -198,7 +189,7 @@ function setup() {
 
     button.style.backgroundImage = `url('${buttons_icons[i]}')`;
     button.style.backgroundSize = "cover";
-    button.addEventListener("click", () => pushImage(i));
+    button.addEventListener("click", () => showImage(i));
 
 
     emojiKBA.appendChild(button);
@@ -209,26 +200,25 @@ function setup() {
 
 
 
-  // e_buttons = document.querySelectorAll('.emoji');
+  e_buttons = document.querySelectorAll('.emoji');
 
-  // // 事件监听器
-  // e_buttons.forEach(button => {
-  //   button.addEventListener('click', () => {
-  //     const imageSrc = button.dataset.src;
-  //     console.log(imageSrc);
-  //     selected_emojis.push(imageSrc);
-  //     console.log(selected_emojis);
-  //   });
-  // });
+  // 事件监听器
+  e_buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      const imageSrc = button.dataset.src;
+      selected_emojis.push(imageSrc);
+      console.log(selected_emojis);
+    });
+  });
 
-  // const delButton = document.getElementById('emoji-del');
+  const delButton = document.getElementById('emoji-del');
 
-  // // 事件监听器
-  // delButton.addEventListener('click', () => {
+  // 事件监听器
+  delButton.addEventListener('click', () => {
 
-  //   selected_emojis.pop();
-  //   console.log(selected_emojis);
-  // });
+    selected_emojis.pop();
+    console.log(selected_emojis);
+  });
 
 
 
@@ -247,10 +237,9 @@ function setup() {
         generateImageGroup(2);
         break;
       case 3:
-        generateImageGroup(3);
-        break;
       case 4:
-        generateImageGroup(4);
+
+        generateImageGroup(3);
         break;
       default:
 
@@ -405,34 +394,18 @@ function draw() {
 
 
 
-  if (dragableMergedPics != null) {
-    dragableMergedPics.show();
+  for (let i = 0; i < img.length; i++) {
+    img[i].show();
   }
 
-  // for (let i = 0; i < img.length; i++) {
-  //   img[i].show();
-  // }
+
 
 }
 
-let dragableMergedPics;
 
 function generateImageGroup(length) {
 
-  // let backgroundURL;
-  let mergedPics = [];
-
-  for (let i = 0; i < selected_emojis.length; i++) {
-    // console.log(images[selected_emojis[i]])
-    mergedPics.push(images[selected_emojis[i]]);
-  }
-
-  let x = random(width);
-  let y = random(height);
-
-  dragableMergedPics = new ImageDragObjectGroup(x, y, mergedPics, 1);
-  // dragableMergedPics.show();
-
+  let backgroundURL;
   switch (length) {
     case 1:
       backgroundURL = 'assets/k1.png';
@@ -441,11 +414,12 @@ function generateImageGroup(length) {
       backgroundURL = 'assets/k2.png';
       break;
     case 3:
-      backgroundURL = 'assets/k3.png';
     case 4:
-      backgroundURL = 'assets/k4.png';
+      backgroundURL = 'assets/k3.png';
       break;
   }
+
+
 }
 
 function NEXT() {
@@ -576,24 +550,17 @@ function updateButtonLabels() {
   buttons[1].elt.textContent = scaleMode ? 'Done' : 'Enter Scale Mode';
 }
 
-function pushImage(index) {
+function showImage(index) {
   let x = random(width - images[index].width);
   let y = random(height - images[index].height);
   //let x = 1000;
   //let y = 1000;
   let dragObject = new ImageDragObject(x, y, images[index], 1);
-
   img.push(dragObject);
-
-  selected_emojis.push(index);
-  console.log(selected_emojis);
 }
 
 function mousePressed() {
   if (eraseMode) {
-    if (dragableMergedPics != null && dragableMergedPics.mouseInside()) {
-      dragableMergedPics = null;
-    }
 
     for (let i = 0; i < img.length; i++) {
       if (img[i].mouseInside()) {
@@ -602,6 +569,7 @@ function mousePressed() {
       }
     }
   } else if (scaleMode) {
+
     for (let i = 0; i < img.length; i++) {
       if (img[i].mouseInside()) {
         selectedImageIndex = i;
@@ -610,44 +578,26 @@ function mousePressed() {
     }
   } else {
 
-    if (dragableMergedPics != null && dragableMergedPics.mouseInside()) {
-      if (dragableMergedPics.mouseInside()) {
-        dragableMergedPics.dragging = true;
-        dragableMergedPics.offsetX = mouseX - dragableMergedPics.x;
-        dragableMergedPics.offsetY = mouseY - dragableMergedPics.y;
-      }
-
-      for (let i = 0; i < img.length; i++) {
-        if (img[i].mouseInside()) {
-          img[i].dragging = true;
-          img[i].offsetX = mouseX - img[i].x;
-          img[i].offsetY = mouseY - img[i].y;
-          break;
-        }
+    for (let i = 0; i < img.length; i++) {
+      if (img[i].mouseInside()) {
+        img[i].dragging = true;
+        img[i].offsetX = mouseX - img[i].x;
+        img[i].offsetY = mouseY - img[i].y;
+        break;
       }
     }
   }
 }
 
 function mouseReleased() {
-  if (dragableMergedPics != null && dragableMergedPics.mouseInside()) {
-    if (dragableMergedPics.mouseInside()) {
-      dragableMergedPics.dragging = false;
-    }
 
-    for (let i = 0; i < img.length; i++) {
-      img[i].dragging = false;
-    }
-    selectedImageIndex = -1;
+  for (let i = 0; i < img.length; i++) {
+    img[i].dragging = false;
   }
+  selectedImageIndex = -1;
 }
 
 function mouseDragged() {
-
-  if (dragableMergedPics != null && dragableMergedPics.dragging) {
-    dragableMergedPics.x = mouseX - dragableMergedPics.offsetX;
-    dragableMergedPics.y = mouseY - dragableMergedPics.offsetY;
-  }
 
   for (let i = 0; i < img.length; i++) {
     if (img[i].dragging) {
@@ -780,53 +730,6 @@ class ImageDragObject {
     this.scale = max(0.1, this.scale);
   }
 }
-
-
-class ImageDragObjectGroup {
-  constructor(x, y, imgs, scale) {
-    this.x = x;
-    this.y = y;
-    this.imgs = imgs;
-    this.scale = scale;
-    this.originalScale = scale;
-    this.dragging = false;
-    this.offsetX = 0;
-    this.offsetY = 0;
-  }
-
-  mouseInside() {
-    let minX = this.x;
-    let minY = this.y;
-    let maxX = this.x + this.imgs[0].width * this.scale;
-    let maxY = this.y + this.imgs.reduce((acc, img) => acc + img.height * this.scale, 0);
-    return mouseX >= minX && mouseX <= maxX && mouseY >= minY && mouseY <= maxY;
-  }
-
-  touchInside(touchX, touchY) {
-    let minX = this.x;
-    let minY = this.y;
-    let maxX = this.x + this.imgs[0].width * this.scale;
-    let maxY = this.y + this.imgs.reduce((acc, img) => acc + img.height * this.scale, 0);
-    return touchX >= minX && touchX <= maxX && touchY >= minY && touchY <= maxY;
-  }
-
-  show() {
-    for (let i = 0; i < this.imgs.length; i++) {
-      image(this.imgs[i], this.x, this.y + i * this.imgs[i].height * this.scale, this.imgs[i].width * this.scale, this.imgs[i].height * this.scale);
-    }
-  }
-
-  adjustScale(dx, dy) {
-    let d = dist(this.x, this.y, mouseX, mouseY);
-    let lastDistance = dist(this.x, this.y, mouseX - dx, mouseY - dy);
-    let scaleChange = d - lastDistance;
-    this.scale += scaleChange / 100;
-    this.scale = max(0.1, this.scale);
-  }
-}
-
-
-
 
 //----TEXT INPUT DETAIL SETTINGS----
 
