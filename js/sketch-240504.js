@@ -22,7 +22,7 @@ let bs1_sun;
 
 let buttons_icons = [
   'assets/fire_emoji.png',
-  'assets/dragon_emoji.png',
+  'assets/Dragon_emoji.png',
   'assets/rainbow_emoji.png',
   'assets/he_emoji.png'
 ];
