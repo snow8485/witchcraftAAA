@@ -41,6 +41,10 @@ let imageULRs = ['assets/huo.png',
   'assets/he.png']
 
 
+let BGPicURLs = ['assets/k1.png', 'assets/k2.png', 'assets/k3.png', 'assets/k4.png'];
+
+let BGPics = []
+
 let images = []
 
 
@@ -69,6 +73,7 @@ let buttons = [];
 let eraseMode = false;
 let scaleMode = false;
 let selectedImageIndex = -1;
+let selectedMergedImageIndex = -1;
 
 
 // CAM
@@ -110,6 +115,13 @@ function preload() {
 
   for (let i = 0; i < imageULRs.length; i++) {
     images.push(loadImage(imageULRs[i]));
+  }
+
+  for (let i = 0; i < BGPicURLs.length; i++) {
+    BGPics.push(loadImage(BGPicURLs[i]));
+  }
+  for (let i = 0; i < BGPics.length; i++) {
+    console.log(BGPics[i]);
   }
 
 
@@ -258,7 +270,6 @@ function setup() {
   // }
   let emojiKBA = document.getElementById("emoji-keyboard-area");
 
-
   for (let i = 0; i < images.length; i++) {
 
 
@@ -300,16 +311,22 @@ function setup() {
   // });
 
 
-  // const delButton = document.getElementById('emoji-del');
+  const delButton = document.getElementById('emoji-del');
 
 
   // // 事件监听器
-  // delButton.addEventListener('click', () => {
+  delButton.addEventListener('click', () => {
 
 
-  //   selected_emojis.pop();
-  //   console.log(selected_emojis);
-  // });
+    selected_emojis.pop();
+
+    let emojiInputBox = document.getElementById("emoji-input-box"); if (emojiInputBox.lastChild) {
+      // 确保存在子元素 
+      emojiInputBox.removeChild(emojiInputBox.lastChild);
+    }
+
+    console.log(selected_emojis);
+  });
 
 
 
@@ -321,17 +338,11 @@ function setup() {
 
   //事件监听器
   enterButton.addEventListener('click', () => {
-
-
     switch (selected_emojis.length) {
       case 1:
-
-
         generateImageGroup(1);
         break;
       case 2:
-
-
         generateImageGroup(2);
         break;
       case 3:
@@ -341,8 +352,6 @@ function setup() {
         generateImageGroup(4);
         break;
       default:
-
-
         console.log("please enter");
     }
   });
@@ -545,8 +554,14 @@ function draw() {
 
 
 
-  if (dragableMergedPics != null) {
-    dragableMergedPics.show();
+  // if (dragableMergedPics != null) {
+  //   dragableMergedPics.show();
+  // }
+
+  if (dragableMergedPicsList != null) {
+    for (let i = 0; i < dragableMergedPicsList.length; i++) {
+      dragableMergedPicsList[i].show();
+    }
   }
 
 
@@ -560,6 +575,7 @@ function draw() {
 
 let dragableMergedPics;
 
+let dragableMergedPicsList = [];
 
 function generateImageGroup(length) {
 
@@ -577,25 +593,20 @@ function generateImageGroup(length) {
   let x = random(width);
   let y = random(height);
 
+  let backgroundPic = BGPics[length - 1];
 
-  dragableMergedPics = new ImageDragObjectGroup(x, y, mergedPics, 1);
+  dragableMergedPics = new ImageDragObjectGroup(x, y, mergedPics, 1, backgroundPic);
   // dragableMergedPics.show();
+  dragableMergedPicsList.push(dragableMergedPics);
 
+  mergedPics = [];
+  selected_emojis = [];
 
-  switch (length) {
-    case 1:
-      backgroundURL = 'assets/k1.png';
-      break;
-    case 2:
-      backgroundURL = 'assets/k2.png';
-      break;
-    case 3:
-      backgroundURL = 'assets/k3.png';
-    case 4:
-      backgroundURL = 'assets/k4.png';
-      break;
-  }
+  let emojiInputBox = document.getElementById("emoji-input-box");
+  emojiInputBox.innerHTML = ''; // 将内容设置为空字符串，从而清空所有内容
+
 }
+
 
 
 function NEXT() {
@@ -776,16 +787,32 @@ function pushImage(index) {
 
   img.push(dragObject);
 
+  if (selected_emojis.length < 4) {
+    selected_emojis.push(index);
+    console.log(selected_emojis);
 
-  selected_emojis.push(index);
-  console.log(selected_emojis);
+    let emojiInputBox = document.getElementById("emoji-input-box");
+    // 创建一个新的 img 元素 
+    let newImage = document.createElement('img');
+    // console.log(newImage);
+    newImage.src = imageULRs[index];
+    // 确保 images[index].src 是图片的正确路径 
+    newImage.style.width = 'auto'; newImage.style.height = '100%'; // 将新的 img 元素添加到 div 中 
+    emojiInputBox.appendChild(newImage);
+    console.log(imageULRs[index])
+  }
 }
 
 
 function mousePressed() {
   if (eraseMode) {
-    if (dragableMergedPics != null && dragableMergedPics.mouseInside()) {
-      dragableMergedPics = null;
+    if (dragableMergedPicsList != null) {
+      for (let i = 0; i < dragableMergedPicsList.length; i++) {
+        if (dragableMergedPicsList[i].mouseInside()) {
+          dragableMergedPicsList.splice(i, 1);
+          break;
+        }
+      }
     }
 
     for (let i = 0; i < img.length; i++) {
@@ -795,6 +822,15 @@ function mousePressed() {
       }
     }
   } else if (scaleMode) {
+    if (dragableMergedPicsList != null) {
+      for (let i = 0; i < dragableMergedPicsList.length; i++) {
+        if (dragableMergedPicsList[i].mouseInside()) {
+          selectedMergedImageIndex = i;
+          break;
+        }
+      }
+    }
+
     for (let i = 0; i < img.length; i++) {
       if (img[i].mouseInside()) {
         selectedImageIndex = i;
@@ -802,22 +838,23 @@ function mousePressed() {
       }
     }
   } else {
-
-    if (dragableMergedPics != null && dragableMergedPics.mouseInside()) {
-      if (dragableMergedPics.mouseInside()) {
-        dragableMergedPics.dragging = true;
-        dragableMergedPics.offsetX = mouseX - dragableMergedPics.x;
-        dragableMergedPics.offsetY = mouseY - dragableMergedPics.y;
-      }
-
-
-      for (let i = 0; i < img.length; i++) {
-        if (img[i].mouseInside()) {
-          img[i].dragging = true;
-          img[i].offsetX = mouseX - img[i].x;
-          img[i].offsetY = mouseY - img[i].y;
+    if (dragableMergedPicsList != null) {
+      for (let i = 0; i < dragableMergedPicsList.length; i++) {
+        if (dragableMergedPicsList[i].mouseInside()) {
+          dragableMergedPicsList[i].dragging = true;
+          dragableMergedPicsList[i].offsetX = mouseX - dragableMergedPicsList[i].x;
+          dragableMergedPicsList[i].offsetY = mouseY - dragableMergedPicsList[i].y;
           break;
         }
+      }
+    }
+
+    for (let i = 0; i < img.length; i++) {
+      if (img[i].mouseInside()) {
+        img[i].dragging = true;
+        img[i].offsetX = mouseX - img[i].x;
+        img[i].offsetY = mouseY - img[i].y;
+        break;
       }
     }
   }
@@ -825,33 +862,35 @@ function mousePressed() {
 
 
 function mouseReleased() {
-  if (dragableMergedPics != null && dragableMergedPics.mouseInside()) {
-    if (dragableMergedPics.mouseInside()) {
-      dragableMergedPics.dragging = false;
+  if (dragableMergedPicsList != null) {
+    for (let i = 0; i < dragableMergedPicsList.length; i++) {
+      dragableMergedPicsList[i].dragging = false;
     }
-
-
-    for (let i = 0; i < img.length; i++) {
-      img[i].dragging = false;
-    }
-    selectedImageIndex = -1;
+    selectedMergedImageIndex = -1;
   }
+
+  for (let i = 0; i < img.length; i++) {
+    img[i].dragging = false;
+  }
+  selectedImageIndex = -1;
 }
 
 
 function mouseDragged() {
 
-
-  if (!scaleMode && dragableMergedPics != null && dragableMergedPics.dragging) {
-    dragableMergedPics.x = mouseX - dragableMergedPics.offsetX;
-    dragableMergedPics.y = mouseY - dragableMergedPics.offsetY;
+  if (dragableMergedPicsList != null) {
+    for (let i = 0; i < dragableMergedPicsList.length; i++) {
+      if (dragableMergedPicsList[i].dragging) {
+        dragableMergedPicsList[i].x = mouseX - dragableMergedPicsList[i].offsetX;
+        dragableMergedPicsList[i].y = mouseY - dragableMergedPicsList[i].offsetY;
+      }
+    }
   }
-  else if (scaleMode && dragableMergedPics != null) {
+  if (selectedMergedImageIndex !== -1) {
     let dx = mouseX - pmouseX;
     let dy = mouseY - pmouseY;
-    dragableMergedPics.adjustScale(dx, dy);
+    dragableMergedPicsList[selectedMergedImageIndex].adjustScale(dx, dy);
   }
-
 
   for (let i = 0; i < img.length; i++) {
     if (img[i].dragging) {
@@ -869,28 +908,27 @@ function mouseDragged() {
 }
 
 
-
-
 let prevTouchX = 0;
 let prevTouchY = 0;
 
 
-
-
 function touchStarted() {
+
   if (touches.length > 0 && isEventOnCanvas(touches[0].x, touches[0].y)) {
-
-
     if (touches.length > 0) {
       prevTouchX = touches[0].x;
       prevTouchY = touches[0].y;
     }
 
-
     if (eraseMode) {
 
-      if (dragableMergedPics != null && dragableMergedPics.touchInside(touches[0].x, touches[0].y)) {
-        dragableMergedPics = null;
+      if (dragableMergedPicsList != null) {
+        for (let i = 0; i < dragableMergedPicsList.length; i++) {
+          if (dragableMergedPicsList[i].touchInside(touches[0].x, touches[0].y)) {
+            dragableMergedPicsList.splice(i, 1);
+            break;
+          }
+        }
       }
 
       for (let i = 0; i < img.length; i++) {
@@ -900,6 +938,16 @@ function touchStarted() {
         }
       }
     } else if (scaleMode) {
+
+      if (dragableMergedPicsList != null) {
+        for (let i = 0; i < dragableMergedPicsList.length; i++) {
+          if (dragableMergedPicsList[i].touchInside(touches[0].x, touches[0].y)) {
+            selectedMergedImageIndex = i;
+            break;
+          }
+        }
+      }
+
       for (let i = 0; i < img.length; i++) {
         if (img[i].touchInside(touches[0].x, touches[0].y)) {
           selectedImageIndex = i;
@@ -908,20 +956,22 @@ function touchStarted() {
       }
     } else {
 
-      if (dragableMergedPics != null && dragableMergedPics.touchInside(touches[0].x, touches[0].y)) {
-        if (dragableMergedPics.touchInside(touches[0].x, touches[0].y)) {
-          dragableMergedPics.dragging = true;
-          dragableMergedPics.offsetX = touches[0].x - dragableMergedPics.x;
-          dragableMergedPics.offsetY = touches[0].y - dragableMergedPics.y;
-        }
-
-        for (let i = 0; i < img.length; i++) {
-          if (img[i].touchInside(touches[0].x, touches[0].y)) {
-            img[i].dragging = true;
-            img[i].offsetX = mouseX - img[i].x;
-            img[i].offsetY = mouseY - img[i].y;
+      if (dragableMergedPicsList != null) {
+        for (let i = 0; i < dragableMergedPicsList.length; i++) {
+          if (dragableMergedPicsList[i].touchInside(touches[0].x, touches[0].y)) {
+            dragableMergedPicsList[i].dragging = true;
+            dragableMergedPicsList[i].offsetX = mouseX - dragableMergedPicsList[i].x;
+            dragableMergedPicsList[i].offsetY = mouseY - dragableMergedPicsList[i].y;
             break;
           }
+        }
+      }
+      for (let i = 0; i < img.length; i++) {
+        if (img[i].touchInside(touches[0].x, touches[0].y)) {
+          img[i].dragging = true;
+          img[i].offsetX = mouseX - img[i].x;
+          img[i].offsetY = mouseY - img[i].y;
+          break;
         }
       }
     }
@@ -932,9 +982,13 @@ function touchMoved() {
   if (touches.length > 0 && isEventOnCanvas(touches[0].x, touches[0].y)) {
     // 处理拖动
 
-    if (dragableMergedPics != null && dragableMergedPics.dragging) {
-      dragableMergedPics.x = touches[0].x - dragableMergedPics.offsetX;
-      dragableMergedPics.y = touches[0].y - dragableMergedPics.offsetY;
+    if (dragableMergedPicsList != null) {
+      for (let i = 0; i < dragableMergedPicsList.length; i++) {
+        if (dragableMergedPicsList[i].dragging) {
+          dragableMergedPicsList[i].x = touches[0].x - dragableMergedPicsList[i].offsetX;
+          dragableMergedPicsList[i].y = touches[0].y - dragableMergedPicsList[i].offsetY;
+        }
+      }
     }
 
     for (let i = 0; i < img.length; i++) {
@@ -952,13 +1006,11 @@ function touchMoved() {
       img[selectedImageIndex].adjustScale(dx, dy);
     }
 
-    if (scaleMode && dragableMergedPics != null) {
+    if (selectedMergedImageIndex !== -1) {
       let dx = touches[0].x - prevTouchX;
       let dy = touches[0].y - prevTouchY;
-      dragableMergedPics.adjustScale(dx, dy);
+      dragableMergedPicsList[selectedMergedImageIndex].adjustScale(dx, dy);
     }
-
-
 
     // 更新前一个触摸位置
     prevTouchX = touches[0].x;
@@ -971,8 +1023,11 @@ function touchMoved() {
 
 function touchEnded() {
 
-  if (dragableMergedPics != null) {
-    dragableMergedPics.dragging = false;
+  if (dragableMergedPicsList != null) {
+    for (let i = 0; i < dragableMergedPicsList.length; i++) {
+      dragableMergedPicsList[i].dragging = false;
+    }
+    selectedMergedImageIndex = -1;
   }
 
   for (let i = 0; i < img.length; i++) {
@@ -1040,12 +1095,13 @@ class ImageDragObject {
 
 
 class ImageDragObjectGroup {
-  constructor(x, y, imgs, scale) {
+  constructor(x, y, imgs, scale, bgImg) {
     this.x = x;
     this.y = y;
     this.imgs = imgs;
     this.scale = scale;
     this.originalScale = scale;
+    this.bgImg = bgImg;
     this.dragging = false;
     this.offsetX = 0;
     this.offsetY = 0;
@@ -1074,6 +1130,7 @@ class ImageDragObjectGroup {
     for (let i = 0; i < this.imgs.length; i++) {
       image(this.imgs[i], this.x, this.y + i * this.imgs[i].height * this.scale, this.imgs[i].width * this.scale, this.imgs[i].height * this.scale);
     }
+    image(this.bgImg, this.x, this.y, this.bgImg.width * this.scale, this.bgImg.height * this.scale);
   }
 
 
