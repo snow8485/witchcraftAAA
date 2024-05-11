@@ -36,9 +36,9 @@ let buttons_icons = [
   'assets/emoji_moon.png',
   'assets/emoji_mouth.png',
   'assets/emoji_shan.png',
-  'assets/emoji_star.png',
   'assets/emoji_sun.png',
   'assets/emoji_tree.png',
+  'assets/emoji_star.png',
   'assets/emoji_water.png',
   'assets/emoji_wind.png'
 
@@ -53,9 +53,9 @@ let imageULRs = ['assets/huo.png',
   'assets/moon.png',
   'assets/tongue.png',
   'assets/shan.png',
-  'assets/star.png',
   'assets/sun.png',
   'assets/sen.png',
+  'assets/star.png',
   'assets/water.png',
   'assets/feng.png'
 
@@ -254,10 +254,10 @@ function setup() {
   button_edit.hide();
 
 
-  button_text_input = createButton('Say Something');
-  button_text_input.parent("button-container");
-  button_text_input.mousePressed(text_input)
-  button_text_input.hide();
+  // button_text_input = createButton('Say Something');
+  // button_text_input.parent("button-container");
+  // button_text_input.mousePressed(text_input)
+  // button_text_input.hide();
 
 
 
@@ -735,7 +735,7 @@ function EDIT() {
 
 
   button_snap.hide();
-  button_text_input.show();
+  // button_text_input.show();
   button_edit.hide();
 
 
@@ -815,11 +815,11 @@ function pushImage(index) {
     console.log(selected_emojis);
 
     let emojiInputBox = document.getElementById("emoji-input-box");
-    // 创建一个新的 img 元素 
+
     let newImage = document.createElement('img');
     // console.log(newImage);
     newImage.src = imageULRs[index];
-    // 确保 images[index].src 是图片的正确路径 
+
     newImage.style.width = 'auto'; newImage.style.height = '100%'; // 将新的 img 元素添加到 div 中 
     emojiInputBox.appendChild(newImage);
     console.log(imageULRs[index])
@@ -1035,7 +1035,7 @@ function touchMoved() {
       dragableMergedPicsList[selectedMergedImageIndex].adjustScale(dx, dy);
     }
 
-    // 更新前一个触摸位置
+
     prevTouchX = touches[0].x;
     prevTouchY = touches[0].y;
   }

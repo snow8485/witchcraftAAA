@@ -7,7 +7,7 @@ body {
 canvas {
   display: block;
   width: 100vw;
-  height: 100vh; 
+  height: 100vh;
 
 }
 
@@ -27,14 +27,14 @@ button {
 
 
   width: 100vw;
-  height: 100vh; 
+  height: 100vh;
 
   position: absolute;
 
-  
- /* background-color: aqua; */
 
-  
+  /* background-color: aqua; */
+
+
 }
 
 /* INDEX PAGE */
@@ -78,22 +78,23 @@ button {
 
 #start-button {
   /* explore! */
-  width:100;
+  width: 100;
   height: 300;
   /* display: flex;  */
-  justify-content: center; 
-  align-items: center; 
+  justify-content: center;
+  align-items: center;
   /* border: none; */
   /* background-color: transparent; */
   /* padding: 0;  */
   /* background-size: cover;  */
-  background:url('start.png') no-repeat 0 0 / 100% 100%;
-  background-position: center; /* 图片居中对齐 */
+  background: url('start.png') no-repeat 0 0 / 100% 100%;
+  background-position: center;
+  /* 图片居中对齐 */
 }
 
 #intro-button {
   /* explore! */
-  
+
 }
 
 
@@ -107,8 +108,8 @@ button {
   width: 100%;
   height: 50%;
 
-  
-  display: none; 
+
+  display: none;
 
 
 }
@@ -129,13 +130,9 @@ button {
   margin: 10px;
 }
 
-#emoji-erase-button {
+#emoji-erase-button {}
 
-}
-
-#emoji-scale-button {
-
-}
+#emoji-scale-button {}
 
 #emoji-input-container {
   /* background-color: olive; */
@@ -145,7 +142,7 @@ button {
 #emoji-input-area {
   /* background-color: aquamarine; */
   height: 15%;
-
+  width: 250;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -175,7 +172,7 @@ button {
   text-align: center;
   margin: 10px;
   background-size: cover;
-  
+
 }
 
 
@@ -209,7 +206,7 @@ button {
 #p5-canvas-container {
   position: absolute;
   left: 50%;
- transform: translateX(-50%);
+  transform: translateX(-50%);
 }
 
 #button-container {
@@ -225,7 +222,7 @@ button {
 }
 
 #text-input-container {
-  width:480;
+  width: 480;
   margin: auto;
   padding: 0px 100px 100px 100px;
   /* background-color: aqua; */
