@@ -31,14 +31,37 @@ let buttons_icons = [
   'assets/fire_emoji.png',
   'assets/Dragon_emoji.png',
   'assets/rainbow_emoji.png',
-  'assets/he_emoji.png'
+  'assets/he_emoji.png',
+  'assets/emoji_eye.png',
+  'assets/emoji_moon.png',
+  'assets/emoji_mouth.png',
+  'assets/emoji_shan.png',
+  'assets/emoji_star.png',
+  'assets/emoji_sun.png',
+  'assets/emoji_tree.png',
+  'assets/emoji_water.png',
+  'assets/emoji_wind.png'
+
 ];
 
 
 let imageULRs = ['assets/huo.png',
   'assets/long.png',
   'assets/caihong.png',
-  'assets/he.png']
+  'assets/he.png',
+  'assets/eye.png',
+  'assets/moon.png',
+  'assets/tongue.png',
+  'assets/shan.png',
+  'assets/star.png',
+  'assets/sun.png',
+  'assets/sen.png',
+  'assets/water.png',
+  'assets/feng.png'
+
+
+
+]
 
 
 let BGPicURLs = ['assets/k1.png', 'assets/k2.png', 'assets/k3.png', 'assets/k4.png'];
