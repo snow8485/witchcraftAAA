@@ -170,7 +170,7 @@ function setup() {
 
 
 
-  let canvas = createCanvas(document.documentElement.clientWidth, 450);
+  let canvas = createCanvas(480, 480);
   canvas.parent("p5-canvas-container");
 
 
@@ -768,11 +768,6 @@ function text_input() {
   return false;
 }
 
-
-
-
-
-
 //image dragging
 
 
@@ -784,14 +779,11 @@ function EraseMode() {
 
 
 
-
 function ScaleMode() {
   scaleMode = !scaleMode;
   eraseMode = false;
   updateButtonLabels();
 }
-
-
 
 
 function updateButtonLabels() {
@@ -930,10 +922,8 @@ function mouseDragged() {
   }
 }
 
-
 let prevTouchX = 0;
 let prevTouchY = 0;
-
 
 function touchStarted() {
 
@@ -1041,9 +1031,6 @@ function touchMoved() {
   }
 }
 
-
-
-
 function touchEnded() {
 
   if (dragableMergedPicsList != null) {
@@ -1071,11 +1058,6 @@ function isEventOnCanvas(x, y) {
   return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
 }
 
-
-
-
-
-
 class ImageDragObject {
   constructor(x, y, img, scale) {
     this.x = x;
@@ -1088,11 +1070,9 @@ class ImageDragObject {
     this.offsetY = 0;
   }
 
-
   mouseInside() {
     return mouseInBox(this.x, this.y, this.img.width * this.scale, this.img.height * this.scale);
   }
-
 
   touchInside(touchX, touchY) {
     return touchX >= this.x && touchX < this.x + this.img.width * this.scale &&
@@ -1104,7 +1084,6 @@ class ImageDragObject {
     image(this.img, this.x, this.y, this.img.width * this.scale, this.img.height * this.scale);
   }
 
-
   adjustScale(dx, dy) {
     let d = dist(this.x + this.img.width * this.scale, this.y + this.img.height * this.scale, mouseX, mouseY);
     let lastDistance = dist(this.x + this.img.width * this.scale, this.y + this.img.height * this.scale, mouseX - dx, mouseY - dy);
@@ -1113,9 +1092,6 @@ class ImageDragObject {
     this.scale = max(0.1, this.scale);
   }
 }
-
-
-
 
 class ImageDragObjectGroup {
   constructor(x, y, imgs, scale, bgImg) {
@@ -1165,9 +1141,9 @@ class ImageDragObjectGroup {
 
   show() {
     for (let i = 0; i < this.imgs.length; i++) {
-      image(this.imgs[i], this.x, this.y + i * this.imgs[i].height * this.scale, this.imgs[i].width * this.scale, this.imgs[i].height * this.scale);
+      image(this.imgs[i], this.x, this.y + i * (this.imgs[i].height - 40) * this.scale, this.imgs[i].width * this.scale, this.imgs[i].height * this.scale);
     }
-    image(this.bgImg, this.x, this.y, this.bgImg.width * this.scale, this.bgImg.height * this.scale);
+    image(this.bgImg, this.x, this.y, this.bgImg.width * this.scale, (this.bgImg.height) * this.scale);
   }
 
   adjustScale(dx, dy) {
@@ -1178,12 +1154,6 @@ class ImageDragObjectGroup {
     this.scale = max(0.1, this.scale);
   }
 }
-
-
-
-
-
-
 
 
 //----TEXT INPUT DETAIL SETTINGS----
