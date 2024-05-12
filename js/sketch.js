@@ -10,6 +10,8 @@ let SCREEN_RATIO = 1;
 let initial_img;
 let seq = 0;
 let cam;
+let targetSize = 480; // 您希望截取的目标尺寸
+
 
 
 let button1, button_next, button_snap, button_save;
@@ -81,15 +83,7 @@ let selected_emojis = [];
 
 let edit_time = false;
 
-
-
-
-
-
-
-
 //scale
-
 
 let img = [];
 let buttons = [];
@@ -103,14 +97,7 @@ let selectedMergedImageIndex = -1;
 let snap;
 let tempCanvas;
 
-
-
-
 let userTextInput = "";
-
-
-
-
 
 
 // TEXT OBJ
@@ -119,10 +106,6 @@ let textX, textY;
 
 
 let words;
-
-
-
-
 
 
 function preload() {
@@ -164,24 +147,24 @@ function preload() {
 
 }
 
-
 function setup() {
-
-
-
 
   let canvas = createCanvas(480, 480);
   canvas.parent("p5-canvas-container");
+  // cam = createCapture(VIDEO);
+  // cam.size(480, 480); 
+  // cam.hide();
+  cam = createCapture(VIDEO, function () {
+    console.log("Camera is ready.");
+    // 动态获取摄像头的分辨率
+    console.log('Camera resolution:', cam.width, 'x', cam.height);
 
-
-
-
-  // SCREEN_RATIO = SCREEN_HEIGHT / 480;
-
-
-  cam = createCapture(VIDEO);
+    // 保证摄像头已经设置好
+    if (cam.width < targetSize || cam.height < targetSize) {
+      console.log('Camera resolution is too low, please check your device.');
+    }
+  });
   cam.hide();
-
 
   //snap = createImage(640 * SCREEN_RATIO, 480 * SCREEN_RATIO);
 
@@ -311,29 +294,6 @@ function setup() {
   }
 
 
-
-
-  //try
-
-
-
-
-
-
-  // e_buttons = document.querySelectorAll('.emoji');
-
-
-  // // 事件监听器
-  // e_buttons.forEach(button => {
-  //   button.addEventListener('click', () => {
-  //     const imageSrc = button.dataset.src;
-  //     console.log(imageSrc);
-  //     selected_emojis.push(imageSrc);
-  //     console.log(selected_emojis);
-  //   });
-  // });
-
-
   const delButton = document.getElementById('emoji-del');
 
 
@@ -350,11 +310,6 @@ function setup() {
 
     console.log(selected_emojis);
   });
-
-
-
-
-
 
   const enterButton = document.getElementById('emoji-enter');
 
@@ -423,12 +378,6 @@ function setup() {
 
 function draw() {
   background(0);
-  //
-
-
-
-
-
 
   for (let button of buttons.slice(2)) {
     if (eraseMode || scaleMode) {
@@ -449,28 +398,24 @@ function draw() {
   }
   else if (seq == 2) {
     push();
-
-
-    // to flip
     translate(width, 0);
     scale(-1, 1);
 
+    // 显示摄像头视频流
+    if (cam.width > 0) {
+      let sx = (cam.width - targetSize) / 2;
+      let sy = (cam.height - targetSize) / 2;
+      image(cam, 0, 0, width, height, sx, sy, targetSize, targetSize);
+    }
 
-    // to place the camera image to the center
-    //translate(-640 * SCREEN_RATIO / 2 + 1063 / 2, 0); // - camWidth/2 + canvasWidth/2
-    //translate(-640, 0);
-    // display the cam image and snapshot!
-    //image(cam, 0, 0, 640 * SCREEN_RATIO, 480 * SCREEN_RATIO);
-    //image(snap, 0, 0, 640 * SCREEN_RATIO, 480 * SCREEN_RATIO);
-
-
-    image(cam, 0, 0, 480, 480);
-    image(snap, 0, 0, 480, 480);
-
+    // 如果已经拍照，显示快照
+    if (snap.width > 0) {
+      let sx = (snap.width - targetSize) / 2;
+      let sy = (snap.height - targetSize) / 2;
+      image(snap, 0, 0, width, height, sx, sy, targetSize, targetSize);
+    }
 
     button_next.hide();
-
-
     pop();
   }
 
@@ -484,14 +429,11 @@ function draw() {
     translate(width, 0);
     scale(-1, 1);
 
-
-    // to place the camera image to the center
-    // translate(-480, 0); // - camWidth/2 + canvasWidth/2
-
-
-    // display the cam image and snapshot!
-    image(cam, 0, 0, 480, 480);
-    //image(snap, 0, 0, 640 * SCREEN_RATIO, 480 * SCREEN_RATIO);
+    if (cam.width > 0) {
+      let sx = (cam.width - targetSize) / 2;
+      let sy = (cam.height - targetSize) / 2;
+      image(cam, 0, 0, width, height, sx, sy, targetSize, targetSize);
+    }
 
 
     button_next.hide();
@@ -526,7 +468,11 @@ function draw() {
 
     // display the cam image and snapshot!
     //image(cam, 0, 0, 640 * SCREEN_RATIO, 480 * SCREEN_RATIO);
-    image(snap, 0, 0, 640 * SCREEN_RATIO, 480 * SCREEN_RATIO);
+    if (cam.width > 0) {
+      let sx = (cam.width - targetSize) / 2;
+      let sy = (cam.height - targetSize) / 2;
+      image(snap, 0, 0, width, height, sx, sy, targetSize, targetSize);
+    }
 
 
     //button_next.hide();
@@ -650,7 +596,6 @@ function NEXT() {
 
 function PROCEED() {
 
-
   button_edit.show();
   button_retake.hide();
   button_proceed.hide();
@@ -669,44 +614,32 @@ function PROCEED() {
   console.log("hi");
 
 
-
-
-
-
 }
 
 
 function RETAKE() {
-
-
   //snap.hide();
   clear();
   seq = 3;
-
-
 }
 
 
 function SNAP() {
-
-
   //snap = cam.get(0, 0);
-
 
   //let tempCanvas = createGraphics(width, height);
 
-
-  tempCanvas = createGraphics(width, height);
-
+  tempCanvas = createGraphics(480, 480);
 
   tempCanvas.push();
-  //tempCanvas.scale(-1, 1);
-  tempCanvas.image(cam, width, 0, -width, height);
+
+  let sx = (cam.width - targetSize) / 2;
+  let sy = (cam.height - targetSize) / 2;
+
+  tempCanvas.image(cam, 0, 0, 480, 480, sx, sy, targetSize, targetSize);
   tempCanvas.pop();
 
-
   snap = tempCanvas.get();
-
 
   button_snap.hide();
   button_proceed.show();
@@ -722,18 +655,12 @@ function SNAP() {
 
 
 function SAVE() {
-
-
   saveCanvas('myCanvas.png');
   return false;
-
-
 }
 
 
 function EDIT() {
-
-
   button_snap.hide();
   // button_text_input.show();
   button_edit.hide();
@@ -750,7 +677,6 @@ function EDIT() {
     edit_interface.style.display = 'none';
   }
   // setup();
-
 
 }
 
