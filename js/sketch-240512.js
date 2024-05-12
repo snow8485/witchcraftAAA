@@ -170,7 +170,7 @@ function setup() {
 
 
 
-  let canvas = createCanvas(document.documentElement.clientWidth, 450);
+  let canvas = createCanvas(450, 450);
   canvas.parent("p5-canvas-container");
 
 
@@ -225,7 +225,7 @@ function setup() {
 
 
   button_save = createButton('Save');
-  button_save.parent("p5-canvas-container");
+  button_save.parent("button-container");
   button_save.mousePressed(SAVE);
   button_save.hide();
 
@@ -243,13 +243,13 @@ function setup() {
 
 
   button_submit = createButton("Submit");
-  button_submit.parent("p5-canvas-container");
+  button_submit.parent("text-input-container");
   button_submit.mousePressed(submitText)
   button_submit.hide();
 
 
   button_edit = createButton('Finish');
-  button_edit.parent("p5-canvas-container");
+  button_edit.parent("button-container");
   button_edit.mousePressed(EDIT)
   button_edit.hide();
 
@@ -1149,26 +1149,13 @@ class ImageDragObjectGroup {
   }
 
 
-  // show() {
-  //   let bgHeight = 0
-  //   let bgWidth = 0
-  //   for (let i = 0; i < this.imgs.length; i++) {
-  //     image(this.imgs[i], this.x, this.y + i * this.imgs[i].height * this.scale, this.imgs[i].width * this.scale, this.imgs[i].height * this.scale);
-  //     bgHeight += this.imgs[i].height * this.scale
-  //     bgWidth = Math.max(bgWidth, this.imgs[i].width * this.scale)
-  //   }
-
-  //   // image(this.bgImg, this.x, this.y, this.bgImg.width * this.scale + 10, this.bgImg.height * this.scale + (this.imgs.length - 1) * 75);
-  //   image(this.bgImg, this.x - 10, this.y, bgWidth + 20, bgHeight + 20);
-  //   console.log(bgWidth, bgHeight)
-  // }
-
   show() {
     for (let i = 0; i < this.imgs.length; i++) {
       image(this.imgs[i], this.x, this.y + i * this.imgs[i].height * this.scale, this.imgs[i].width * this.scale, this.imgs[i].height * this.scale);
     }
     image(this.bgImg, this.x, this.y, this.bgImg.width * this.scale, this.bgImg.height * this.scale);
   }
+
 
   adjustScale(dx, dy) {
     let d = dist(this.x, this.y, mouseX, mouseY);
