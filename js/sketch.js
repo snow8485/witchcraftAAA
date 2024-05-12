@@ -59,9 +59,15 @@ let imageULRs = ['assets/huo.png',
   'assets/sen.png',
   'assets/star.png',
   'assets/water.png',
-  'assets/feng.png'
+  'assets/feng.png',
 
-
+  'assets/che.png',
+  'assets/feng.png',
+  'assets/hua.png',
+  'assets/jin.png',
+  'assets/xin.png',
+  'assets/shu.png',
+  'assets/shou.png'
 
 ]
 
