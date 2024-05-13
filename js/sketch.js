@@ -42,7 +42,23 @@ let buttons_icons = [
   'assets/emoji_tree.png',
   'assets/emoji_star.png',
   'assets/emoji_water.png',
-  'assets/emoji_wind.png'
+  'assets/emoji_wind.png',
+
+
+  'assets/emoji_che.png',
+  'assets/emoji_hua.png',
+
+  'assets/emoij_jin.png',
+  'assets/emoji_xin.png',
+  'assets/emoij_shu.png',
+  'assets/emoji_shou.png',
+  'assets/emoji_no.png',
+  // 'assets/1.png',
+  // 'assets/2.png',
+  // 'assets/3.png',
+  // 'assets/4.png',
+  // 'assets/5.png',
+  // 'assets/6.png',
 
 ];
 
@@ -62,12 +78,13 @@ let imageULRs = ['assets/huo.png',
   'assets/feng.png',
 
   'assets/che.png',
-  'assets/feng.png',
+  // 'assets/feng.png',
   'assets/hua.png',
   'assets/jin.png',
   'assets/xin.png',
   'assets/shu.png',
-  'assets/shou.png'
+  'assets/shou.png',
+  'assets/no.png'
 
 ]
 
@@ -115,7 +132,7 @@ let words;
 
 
 function preload() {
-  initial_img = loadImage('assets/start.png');
+  initial_img = loadImage('assets/ins.png');
 
 
 
@@ -153,7 +170,15 @@ function preload() {
 
 }
 
+let eraseSignImg;
+let scaleSignImg;
+
+
+
 function setup() {
+
+  eraseSignImg = loadImage("assets/shanchu.png");
+  scaleSignImg = loadImage("assets/drag.png");
 
   let canvas = createCanvas(480, 480);
   canvas.parent("p5-canvas-container");
@@ -214,7 +239,7 @@ function setup() {
 
 
   button_save = createButton('Save');
-  button_save.parent("p5-canvas-container");
+  button_save.parent("button-container");
   button_save.mousePressed(SAVE);
   button_save.hide();
 
@@ -238,7 +263,7 @@ function setup() {
 
 
   button_edit = createButton('Finish');
-  button_edit.parent("p5-canvas-container");
+  button_edit.parent("button-container");
   button_edit.mousePressed(EDIT)
   button_edit.hide();
 
@@ -257,6 +282,8 @@ function setup() {
   let eraseButton = createButton('Erase Mode');
   eraseButton.parent("emoji-control-container");
   eraseButton.class("emoji-control-button");
+  // eraseButton.style('background-image', 'url("assets/erasemode.png")');
+  // eraseButton.style('background-size', 'cover'); 
   eraseButton.mousePressed(EraseMode);
 
 
@@ -280,24 +307,80 @@ function setup() {
   //   button.class("emoji-keyboard-area");
   //   buttons.push(button);
   // }
+  // let emojiKBA = document.getElementById("emoji-keyboard-area");
+
+  // for (let i = 0; i < images.length; i++) {
+
+
+  //   let button = document.createElement("button");
+  //   button.setAttribute("class", "emoji");
+
+
+  //   button.style.backgroundImage = `url('${buttons_icons[i]}')`;
+  //   button.style.backgroundSize = "cover";
+  //   //button.style.backgroundColor = "pink";
+  //   button.addEventListener("click", () => pushImage(i));
+
+
+
+
+  //   emojiKBA.appendChild(button);
+  // }
+
+  let maxButtonsPerRow = 5;
+
   let emojiKBA = document.getElementById("emoji-keyboard-area");
 
   for (let i = 0; i < images.length; i++) {
-
-
     let button = document.createElement("button");
     button.setAttribute("class", "emoji");
 
-
     button.style.backgroundImage = `url('${buttons_icons[i]}')`;
     button.style.backgroundSize = "cover";
+    button.style.backgroundColor = "rgba(255, 255, 255, 0.3)";
+
     button.addEventListener("click", () => pushImage(i));
 
+    // if (i == 7) {
+    //   let emptySpace = document.createElement("div");
+    //   emptySpace.setAttribute("class", "empty-space1")
+    //   emojiKBA.appendChild(emptySpace);
+    //   emojiKBA.appendChild(button);
+    // }
 
+    // if (i == 13) {
+    //   let emptySpace = document.createElement("div");
+    //   emptySpace.setAttribute("class", "empty-space2")
+    //   emojiKBA.appendChild(emptySpace);
+    //   emojiKBA.appendChild(button);
+    // }
 
+    // if (i == 17) {
+    //   let emptySpace = document.createElement("div");
+    //   emptySpace.setAttribute("class", "empty-space3")
+    //   emojiKBA.appendChild(emptySpace);
+    //   emojiKBA.appendChild(button);
+    // }
 
     emojiKBA.appendChild(button);
+
+    // 每添加一个按钮后，检查是否需要插入空白元素
+    // if ((i + 1) % maxButtonsPerRow === 0 && i !== images.length - 1) {
+    //   // 创建一个空白的 <div> 元素
+    //   let emptySpace = document.createElement("div");
+    //   emptySpace.setAttribute("class", "empty-space")
+    //   // emptySpace.classList.add("empty-space");
+    //   emojiKBA.appendChild(emptySpace);
+    // }
+
+
+
+    // else {
+    //   emojiKBA.appendChild(button);
+    // }
+
   }
+
 
 
   const delButton = document.getElementById('emoji-del');
@@ -565,8 +648,8 @@ function generateImageGroup(length) {
   }
 
 
-  let x = random(width);
-  let y = random(height);
+  let x = random(100, width - 100);
+  let y = random(100, height - 100);
 
   let backgroundPic = BGPics[length - 1];
 
@@ -1025,6 +1108,8 @@ class ImageDragObject {
   }
 }
 
+
+
 class ImageDragObjectGroup {
   constructor(x, y, imgs, scale, bgImg) {
     this.x = x;
@@ -1076,6 +1161,14 @@ class ImageDragObjectGroup {
       image(this.imgs[i], this.x, this.y + i * (this.imgs[i].height - 40) * this.scale, this.imgs[i].width * this.scale, this.imgs[i].height * this.scale);
     }
     image(this.bgImg, this.x, this.y, this.bgImg.width * this.scale, (this.bgImg.height) * this.scale);
+
+    if (eraseMode) {
+      image(eraseSignImg, this.x, this.y, eraseSignImg.width * this.scale, (eraseSignImg.height) * this.scale);
+    }
+    else if (scaleMode) {
+      image(scaleSignImg, this.x, this.y, scaleSignImg.width * this.scale, (scaleSignImg.height) * this.scale);
+    }
+
   }
 
   adjustScale(dx, dy) {

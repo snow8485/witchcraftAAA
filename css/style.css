@@ -115,7 +115,7 @@ button {
 }
 
 #emoji-control-container {
-  /* background-color: tomato; */
+  background-color: tomato;
   height: 20%;
 
   display: flex;
@@ -130,19 +130,23 @@ button {
   margin: 10px;
 }
 
-#emoji-erase-button {}
+#emoji-erase-button {
+  background-color: olive;
+}
+
+
 
 #emoji-scale-button {}
 
 #emoji-input-container {
-  /* background-color: olive; */
+  background-color: olive;
   height: 80%;
 }
 
 #emoji-input-area {
-  /* background-color: aquamarine; */
+  background-color: aquamarine;
   height: 15%;
-  width: 250;
+  width: auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -157,17 +161,19 @@ button {
 }
 
 #emoji-keyboard-area {
-  /* background-color: cadetblue; */
+  background-color: cadetblue;
   height: 70%;
-
+  width: 80%;
   display: flex;
   flex-wrap: wrap;
+  /* justify-content: flex-end; */
   justify-content: center;
   align-content: center;
   align-items: center;
+  /* margin-left: auto; */
 }
 
-.emoji {
+/* .emoji {
   width: 45px;
   height: 45px;
   text-align: center;
@@ -177,7 +183,55 @@ button {
   top: -10px;
 
 }
+ */
 
+.button-container {
+  display: grid;
+  /* grid-template-columns: repeat(auto-fill, minmax(45px, 1fr)); */
+  grid-gap: 10px;
+  justify-content: flex-end;
+}
+
+.emoji {
+  width: 45px;
+  height: 45px;
+  text-align: center;
+  margin: 5px;
+  background-size: cover;
+  top: -5px;
+  border: none;
+
+}
+
+.empty-space1 {
+  width: 45px;
+  height: 45px;
+  text-align: center;
+  margin: 5px;
+  background-size: cover;
+  top: -5px;
+  visibility: hidden;
+}
+
+.empty-space2 {
+  width: 145px;
+  height: 45px;
+  text-align: center;
+  margin: 10px;
+  background-size: cover;
+  top: -5px;
+  visibility: hidden;
+}
+
+.empty-space3 {
+  width: 200px;
+  height: 45px;
+  text-align: center;
+  margin: 10px;
+  background-size: cover;
+  top: -5px;
+  visibility: hidden;
+}
 
 
 
@@ -210,6 +264,7 @@ button {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  background-color: white;
 }
 
 #button-container {
