@@ -2,7 +2,6 @@
 <html lang="en">
 
 
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,67 +14,55 @@
 </head>
 
 <body>
-    <!-- <style>
-        body {
-            background-image: url('assets/beijing2.png');
-            background-size: cover;
-            background-position: top;
-            background-repeat: no-repeat;
-            /* 禁止背景图重复 */
-            background-attachment: fixed;
-            /* 固定背景图，防止滚动时图片移动 */
+<!-- <style>
+    body {
+        background-image: url('assets/beijing2.png');
+        background-size: cover;
+        background-position: top;
+        background-repeat: no-repeat;
+        /* 禁止背景图重复 */
+        background-attachment: fixed;
+        /* 固定背景图，防止滚动时图片移动 */
 
-        }
-    </style> -->
-
-
-    <div id="main-container">
-
-        <div id="p5-canvas-container">
-            <!-- p5 canvas will be appended to here! -->
-
-        </div>
-
-        <div id="interface-container">
-            <!-- <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    const edit_interface = document.getElementById('interface-container');
-                
-                    if (edit_time) {
-                        edit_interface.style.display = 'block'; // 显示容器
-                    } else {
-                        edit_interface.style.display = 'none'; // 隐藏容器
-                    }
-                });
-                </script> -->
+    }
+</style> -->
 
 
-            <div id="emoji-input-container">
-                <div id="emoji-control-container">
-                    <!-- <button class="emoji-control-button" id="emoji-erase-button">
+<div id="main-container">
 
-                        <img src="assets/erasemode.png" alt="按钮" width="auto" height="auto" max-width=“100%”
-                            max-height=“100%” align-items="center">
+    <div id="p5-canvas-container">
+        <!-- p5 canvas will be appended to here! -->
+
+    </div>
+
+    <div id="interface-container">
+        <!-- <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const edit_interface = document.getElementById('interface-container');
+
+                if (edit_time) {
+                    edit_interface.style.display = 'block'; // 显示容器
+                } else {
+                    edit_interface.style.display = 'none'; // 隐藏容器
+                }
+            });
+            </script> -->
 
 
+        <div id="emoji-input-container">
 
-                    </button> -->
+            <div id="emoji-input-area">
+                <div id="emoji-input-box">
 
-                    <!-- <button class="emoji-control-button" id="emoji-scale-button"></button> -->
                 </div>
+            </div>
 
-                <div id="emoji-input-area">
-                    <div id="emoji-input-box">
-
-                    </div>
-                </div>
-
-
+            <div style="display: flex;">
                 <div id="emoji-keyboard-area">
                     <div class="button-container">
                         <!-- 这里是你的按钮 -->
                     </div>
-                    <!--                  
+                    <!--
                     <button class="emoji" data-emoji="1"></button>
                     <button class="emoji" data-emoji="2"></button> -->
 
@@ -83,24 +70,37 @@
                 <div id="emoji-input-button-area">
                     <button id="emoji-del">DELETE</button>
                     <button id="emoji-enter">ENTER</button>
+                    <div id="emoji-control-container">
+                        <!-- <button class="emoji-control-button" id="emoji-erase-button">
+
+                            <img src="assets/erasemode.png" alt="按钮" width="auto" height="auto" max-width=“100%”
+                                max-height=“100%” align-items="center">
+
+
+
+                        </button> -->
+
+                        <!-- <button class="emoji-control-button" id="emoji-scale-button"></button> -->
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div id="text-input-container">
-            <!--Say Something: -->
-            <!-- text elements will be appended to here! -->
-        </div>
-        <div id="button-container">
-            <!-- buttons will be appended here! -->
-        </div>
-        <div id="asset-container">
-            <!-- buttons will be appended here! -->
-        </div>
-
     </div>
 
-    <script src="js/sketch.js"></script>
+    <div id="text-input-container">
+        <!--Say Something: -->
+        <!-- text elements will be appended to here! -->
+    </div>
+    <div id="button-container">
+        <!-- buttons will be appended here! -->
+    </div>
+    <div id="asset-container">
+        <!-- buttons will be appended here! -->
+    </div>
+
+</div>
+
+<script src="js/sketch.js"></script>
 </body>
 
 </html>
